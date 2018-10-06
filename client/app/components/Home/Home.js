@@ -17,13 +17,20 @@ class Home extends Component {
       signInError: '',
       signInEmail: '',
       signInPassword: '',
+      signUpFirstName: '',
+      signUpLastName: '',
       signUpEmail: '',
+      signUpHomeAddress: '',
       signUpPassword: '',
     };
 
     this.onTextboxChangeSignInEmail = this.onTextboxChangeSignInEmail.bind(this);
     this.onTextboxChangeSignInPassword = this.onTextboxChangeSignInPassword.bind(this);
+
+    this.onTextboxChangeSignUpFirstName = this.onTextboxChangeSignUpFirstName.bind(this);
+    this.onTextboxChangeSignUpLastName = this.onTextboxChangeSignUpLastName.bind(this);
     this.onTextboxChangeSignUpEmail = this.onTextboxChangeSignUpEmail.bind(this);
+    this.onTextboxChangeSignUpHomeAddress = this.onTextboxChangeSignUpHomeAddress.bind(this);
     this.onTextboxChangeSignUpPassword = this.onTextboxChangeSignUpPassword.bind(this);
     
     this.onSignIn = this.onSignIn.bind(this);
@@ -69,9 +76,27 @@ class Home extends Component {
     });
   }
 
+  onTextboxChangeSignUpFirstName(event) {
+    this.setState({
+      signUpFirstName: event.target.value,
+    });
+  }
+
+  onTextboxChangeSignUpLastName(event) {
+    this.setState({
+      signUpLastName: event.target.value,
+    });
+  }
+
   onTextboxChangeSignUpEmail(event) {
     this.setState({
       signUpEmail: event.target.value,
+    });
+  }
+
+  onTextboxChangeSignUpHomeAddress(event) {
+    this.setState({
+      signUpHomeAddress: event.target.value,
     });
   }
 
@@ -84,7 +109,10 @@ class Home extends Component {
   onSignUp() {
     // Grab state
     const {
+      signUpFirstName,
+      signUpLastName,
       signUpEmail,
+      signUpHomeAddress,
       signUpPassword,
     } = this.state;
 
@@ -99,7 +127,10 @@ class Home extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        firstName: signUpFirstName,
+        lastName: signUpLastName,
         email: signUpEmail,
+        homeAddress: signUpHomeAddress,
         password: signUpPassword,
       }),
     }).then(res => res.json())
@@ -109,7 +140,10 @@ class Home extends Component {
           this.setState({
             signUpError: json.message,
             isLoading: false,
+            signUpFirstName: '',
+            signUpLastName: '',
             signUpEmail: '',
+            signUpHomeAddress: '',
             signUpPassword: '',
           });
         } else {
@@ -199,7 +233,10 @@ class Home extends Component {
       signInError,
       signInEmail,
       signInPassword,
+      signUpFirstName,
+      signUpLastName,
       signUpEmail,
+      signUpHomeAddress,
       signUpPassword,
       signUpError,
     } = this.state;
@@ -244,10 +281,28 @@ class Home extends Component {
             }
             <p>Sign Up</p>
             <input
+              type="firstName"
+              placeholder="First Name"
+              value={signUpFirstName}
+              onChange={this.onTextboxChangeSignUpFirstName}
+            /><br />
+            <input
+              type="lastName"
+              placeholder="Last Name"
+              value={signUpLastName}
+              onChange={this.onTextboxChangeSignUpLastName}
+            /><br />
+            <input
               type="email"
               placeholder="Email"
               value={signUpEmail}
               onChange={this.onTextboxChangeSignUpEmail}
+            /><br />
+            <input
+              type="homeAddress"
+              placeholder="Home Address"
+              value={signUpHomeAddress}
+              onChange={this.onTextboxChangeSignUpHomeAddress}
             /><br />
             <input
               type="password"
