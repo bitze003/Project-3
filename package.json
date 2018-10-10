@@ -21,8 +21,9 @@
     "@babel/preset-env": "^7.0.0-beta.42",
     "@babel/preset-react": "^7.0.0-beta.42",
     "autoprefixer": "^8.2.0",
+    "axios": "^0.18.0",
     "babel-loader": "^8.0.0-beta.2",
-    "bcrypt": "^3.0.1",
+    "bcrypt": "^2.0.1",
     "connect-history-api-fallback": "^1.5.0",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
@@ -46,6 +47,7 @@
     "webpack-dev-middleware": "^3.0.1",
     "webpack-hot-middleware": "^2.21.2",
     "webpack-merge": "^4.1.2",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "xml2js": "^0.4.19"
   }
 }
