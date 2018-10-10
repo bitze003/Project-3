@@ -72,7 +72,7 @@ module.exports = (app) => {
 
         newUser.email = email;
         newUser.firstName = firstName;
-        newUser.lastname = lastName;
+        newUser.lastName = lastName;
         newUser.homeAddress = homeAddress;
         newUser.password = newUser.generateHash(password);
     
@@ -85,11 +85,12 @@ module.exports = (app) => {
             }
             return res.send({
                 success: true,
-                message: 'Signed up'
+                message: 'Signed up',
             });
         });
     }); // end of sign up 
 
+    // Sign In
     app.post('/api/account/signin', (req, res, next) => {
         const { body } = req;
         const { 
@@ -124,10 +125,9 @@ module.exports = (app) => {
             if (users.length != 1) {
                 return res.send({
                     success: false,
-                    message: 'Error: Invalid'
+                    message: 'Error: Invalid Username or Password'
                 })
             }
-
             //invalid password
             const user = users[0];
             if (!user.validPassword(password)) {
@@ -136,10 +136,11 @@ module.exports = (app) => {
                     message: 'Error: Invalid Password'
                 });
             }
-
+           
             // Otherwise connect the user
             const userSession = new UserSession();
             userSession.userId = user._id;
+            
             userSession.save((err, doc) => {
                 if (err) {
                     return res.send({
@@ -147,11 +148,10 @@ module.exports = (app) => {
                         message: 'Error: server error'
                     });
                 }
-
                 return res.send({
                     success: true,
-                    message: 'Valid sign in',
-                    token: doc._id
+                    token: doc._id,
+                    firstName: users[0].firstName
                 })
             });
         })
@@ -181,7 +181,6 @@ module.exports = (app) => {
             } else {
                 return res.send({
                     success: true,
-                    message: 'Good'
                 });
             }
         });
@@ -191,7 +190,6 @@ module.exports = (app) => {
         // Get the token
         const { query } = req;
         const { token } = query;
-        // ?token=test
         // Verify the token is one of a kind and it's not deleted.
         UserSession.findOneAndUpdate({
           _id: token,

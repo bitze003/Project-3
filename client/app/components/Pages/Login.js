@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
+import Home from './Home';
+import Header from '../Header/Header';
 
 import {
   getFromStorage,
   setInStorage,
 } from '../../utils/storage';
 
-class Home extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
-
+// state.signedUp is used to toggle between signing up and signing in
+// state.token is used to determine if user is signed in
     this.state = {
       isLoading: true,
+      signedUp: true,
       token: '',
       signUpError: '',
       signInError: '',
       signInEmail: '',
       signInPassword: '',
-      signUpFirstName: '',
-      signUpLastName: '',
+      firstName: '',
+      lastName: '',
       signUpEmail: '',
       signUpHomeAddress: '',
       signUpPassword: '',
@@ -36,10 +40,11 @@ class Home extends Component {
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
     this.logout = this.logout.bind(this);
+    this.toggleSignUp = this.toggleSignUp.bind(this);
   }
 
   componentDidMount() {
-    const obj = getFromStorage('the_main_app');
+    const obj = getFromStorage('Electioneer');
     if (obj && obj.token) {
       const { token } = obj;
       // Verify token
@@ -78,13 +83,13 @@ class Home extends Component {
 
   onTextboxChangeSignUpFirstName(event) {
     this.setState({
-      signUpFirstName: event.target.value,
+      firstName: event.target.value,
     });
   }
 
   onTextboxChangeSignUpLastName(event) {
     this.setState({
-      signUpLastName: event.target.value,
+      lastName: event.target.value,
     });
   }
 
@@ -109,8 +114,8 @@ class Home extends Component {
   onSignUp() {
     // Grab state
     const {
-      signUpFirstName,
-      signUpLastName,
+      firstName,
+      lastName,
       signUpEmail,
       signUpHomeAddress,
       signUpPassword,
@@ -127,32 +132,67 @@ class Home extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        firstName: signUpFirstName,
-        lastName: signUpLastName,
+        firstName: firstName,
+        lastName: lastName,
         email: signUpEmail,
         homeAddress: signUpHomeAddress,
         password: signUpPassword,
       }),
     }).then(res => res.json())
       .then(json => {
-        console.log('json', json);
         if (json.success) {
           this.setState({
             signUpError: json.message,
             isLoading: false,
-            signUpFirstName: '',
-            signUpLastName: '',
-            signUpEmail: '',
-            signUpHomeAddress: '',
-            signUpPassword: '',
+            // firstName: '',
+            // lastName: '',
+            // signUpEmail: '',
+            // signUpHomeAddress: '',
+            // signUpPassword: '',
           });
         } else {
+          console.log(user);
           this.setState({
             signUpError: json.message,
             isLoading: false,
           });
         }
-      });
+      }).then(
+        // sign the user in
+        fetch('/api/account/signin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: signUpEmail,
+            password: signUpPassword,
+          }),
+        }).then(res => res.json())
+          .then(json => {
+            console.log('json :' + json);
+            if (json.success) {
+              setInStorage('Electioneer', { 
+                token: json.token,
+                name: json.firstName
+              });
+              this.setState({
+                // firstName: json.firstName,
+                // lastName: '',
+                signInError: json.message,
+                isLoading: false,
+                // signInPassword: '',
+                // signInEmail: '',
+                token: json.token,
+              });
+            } else {
+              this.setState({
+                signInError: json.message,
+                isLoading: false,
+              });
+            }
+          })
+      )
   }
 
   onSignIn() {
@@ -178,10 +218,14 @@ class Home extends Component {
       }),
     }).then(res => res.json())
       .then(json => {
-        console.log('json', json);
         if (json.success) {
-          setInStorage('the_main_app', { token: json.token });
+          setInStorage('Electioneer', { 
+            token: json.token,
+            name: json.firstName
+          });
           this.setState({
+            firstName: json.firstName,
+            lastName: '',
             signInError: json.message,
             isLoading: false,
             signInPassword: '',
@@ -201,17 +245,19 @@ class Home extends Component {
     this.setState({
       isLoading: true,
     });
-    const obj = getFromStorage('the_main_app');
+    const obj = getFromStorage('Electioneer');
     if (obj && obj.token) {
-      const { token } = obj;
+      
       // Verify token
-      fetch('/api/account/logout?token=' + token)
+      fetch('/api/account/logout?token=' + obj.token)
         .then(res => res.json())
         .then(json => {
           if (json.success) {
+            localStorage.clear();
             this.setState({
               token: '',
-              isLoading: false
+              isLoading: false,
+              firstName: ''
             });
           } else {
             this.setState({
@@ -226,20 +272,50 @@ class Home extends Component {
     }
   }
 
+  toggleSignUp() {
+    if(this.state.signedUp){
+      this.setState({
+        signedUp: false
+      })
+    } else if (!this.state.signedUp){
+        this.setState({
+          signedUp: true
+        })
+      } 
+    }
+
   render() {
     const {
       isLoading,
+      signedUp,
       token,
       signInError,
       signInEmail,
       signInPassword,
-      signUpFirstName,
-      signUpLastName,
+      firstName,
+      lastName,
       signUpEmail,
       signUpHomeAddress,
       signUpPassword,
       signUpError,
     } = this.state;
+
+    const centerStyle = {
+      textAlign: 'center',
+    }
+    const borderBox = {
+      border: '2px solid black',
+      padding: '10px'
+    }
+    const styleToggleSignUp = {
+      border: 'none',
+      fontSize: '14px',
+      cursor: 'pointer'
+    }
+    const blueSignUp = {
+      color: 'blue',
+      display: 'inline'
+    }
 
     if (isLoading) {
       return (<div><p>Loading...</p></div>);
@@ -247,33 +323,42 @@ class Home extends Component {
 
     if (!token) {
       return (
-        <div>
-          <div>
-            {
-              (signInError) ? (
-                <p>{signInError}</p>
-              ) : (null)
-            }
-            <p>Sign In</p>
-            <input
-              type="email"
-              placeholder="Email"
-              value={signInEmail}
-              onChange={this.onTextboxChangeSignInEmail}
-            />
-            <br />
-            <input
-              type="password"
-              placeholder="Password"
-              value={signInPassword}
-              onChange={this.onTextboxChangeSignInPassword}
-            />
-            <br />
-            <button onClick={this.onSignIn}>Sign In</button>
-          </div>
-          <br />
-          <br />
-          <div>
+        
+        <div style={centerStyle}>
+        <p>Welcome to Electioneer!</p>
+          {
+            (signedUp) ? (
+              <div style={borderBox}>
+                {
+                  (signInError) ? (
+                    <p>{signInError}</p>
+                  ) : (null)
+                }
+                <p>Sign In</p>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={signInEmail}
+                  onChange={this.onTextboxChangeSignInEmail}
+                />
+                <br />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={signInPassword}
+                  onChange={this.onTextboxChangeSignInPassword}
+                />
+                <br />
+                <br />
+                <button onClick={this.onSignIn}>Sign In</button>
+              <br />
+              <br />
+                <button onClick={this.toggleSignUp} style={styleToggleSignUp}>Click Here to <p style={blueSignUp}>Sign Up!</p></button>
+              </div>
+
+          ):(
+
+          <div className="signUpDiv">
             {
               (signUpError) ? (
                 <p>{signUpError}</p>
@@ -283,13 +368,13 @@ class Home extends Component {
             <input
               type="firstName"
               placeholder="First Name"
-              value={signUpFirstName}
+              value={firstName}
               onChange={this.onTextboxChangeSignUpFirstName}
             /><br />
             <input
               type="lastName"
               placeholder="Last Name"
-              value={signUpLastName}
+              value={lastName}
               onChange={this.onTextboxChangeSignUpLastName}
             /><br />
             <input
@@ -310,20 +395,30 @@ class Home extends Component {
               value={signUpPassword}
               onChange={this.onTextboxChangeSignUpPassword}
             /><br />
+            <br />
             <button onClick={this.onSignUp}>Sign Up</button>
+            <br />
+            <br />
+            <button onClick={this.toggleSignUp} style={styleToggleSignUp}>Click Here to <p style={blueSignUp}>Sign In!</p></button>
           </div>
-
+            )}
         </div>
       );
     }
 
     return (
       <div>
-        <p>Account</p>
-        <button onClick={this.logout}>Logout</button>
+        <Header 
+        firstName={this.state.firstName}
+        token={this.state.token}
+        logout={this.logout}
+        />
+        <Home 
+
+        />
       </div>
     );
   }
 }
 
-export default Home;
+export default Login;
