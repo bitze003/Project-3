@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenSecretsAPI from '../OpenSecrets/OpenSecretsAPI';
+import OpenSecretsAPI from '../../utils/OpenSecrets/OpenSecretsAPI';
 
 import { Link } from 'react-router-dom';
 

@@ -4,9 +4,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class OpenSecretsAPI extends Component {
-  state = {
+    state = {
     candInfo: {}
   }
+  
   makeApiCall = (e) =>{
     e.preventDefault();
     console.log('button pressed');
@@ -25,6 +26,7 @@ class OpenSecretsAPI extends Component {
           candInfo.cash_on_hand = infores.data.response.summary[0]["$"].cash_on_hand;
           candInfo.candIndustry = industryres.data.response.industries[0].industry[0]["$"].industry_name;
           candInfo.candSector = sectorres.data.response.sectors[0].sector[0]["$"].sector_name;
+          
           return {candInfo};
         });
       }));
