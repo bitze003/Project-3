@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
+<<<<<<< HEAD
 import API from '../../utils/API';
+=======
+import Map from '../Map/Map';
+
+>>>>>>> master
 
 import {
     getFromStorage,
@@ -17,6 +22,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
+<<<<<<< HEAD
         const obj = getFromStorage('Electioneer');
         const houseNumber = obj.houseNumber;
         const streetName = obj.streetName;
@@ -29,12 +35,16 @@ class Home extends Component {
             console.log(res);
         })
         .catch(err => console.log(err));
+=======
+       
+>>>>>>> master
     }
     
     render() {
         return(
         <div className="container">
-            <h1>Home Page</h1>
+            <h1>Home Page</h1> 
+            <Map/>
         </div>
         )
     }
