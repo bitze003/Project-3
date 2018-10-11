@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
+import Map from '../Map/Map';
+
 
 import {
     getFromStorage,
@@ -16,13 +18,14 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        
+       
     }
     
     render() {
         return(
         <div className="container">
-            <h1>Home Page</h1>
+            <h1>Home Page</h1> 
+            <Map/>
         </div>
         )
     }
