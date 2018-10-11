@@ -26,6 +26,18 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  addressType: {
+    type: String,
+    default: ''
+  },
+  city: {
+    type: String,
+    default: ''
+  },
+  state: {
+    type: String,
+    default: ''
+  },
   isDeleted: {
       type: Boolean,
       default: false

@@ -1,6 +1,6 @@
 const xml2js = require('xml2js');
-require('dotenv').config()
-const axios = require('axios')
+require('dotenv').config();
+const axios = require('axios');
 
 
 module.exports = (app) => {
