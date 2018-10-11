@@ -20,7 +20,9 @@ module.exports = {
     path: helpers.root('dist'),
     publicPath: '/'
   },
-
+  node:{
+    fs: "empty"
+  },
   resolve: {
     extensions: ['.js', '.json', '.css', '.scss', '.html'],
     alias: {
@@ -69,9 +71,16 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
 
     new webpack.DefinePlugin({
+      // 'process.env': {
+      //   NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      PRODUCTION: JSON.stringify(true),
+      VERSION: JSON.stringify('5fa3b9'),
+      BROWSER_SUPPORTS_HTML5: true,
+      TWO: '1+1',
+      'typeof window': JSON.stringify('object'),
       'process.env': {
-        NODE_ENV: JSON.stringify(NODE_ENV)
-      }
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      },
     }),
 
     new HtmlWebpackPlugin({

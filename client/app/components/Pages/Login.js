@@ -24,8 +24,12 @@ class Login extends Component {
       firstName: '',
       lastName: '',
       signUpEmail: '',
-      signUpHomeAddress: '',
       signUpPassword: '',
+      signUpHouseNumber: '',
+      signUpStreetName: '',
+      signUpAddressType: '',
+      signUpCity: '',
+      signUpState: '',
     };
 
     this.onTextboxChangeSignInEmail = this.onTextboxChangeSignInEmail.bind(this);
@@ -34,8 +38,12 @@ class Login extends Component {
     this.onTextboxChangeSignUpFirstName = this.onTextboxChangeSignUpFirstName.bind(this);
     this.onTextboxChangeSignUpLastName = this.onTextboxChangeSignUpLastName.bind(this);
     this.onTextboxChangeSignUpEmail = this.onTextboxChangeSignUpEmail.bind(this);
-    this.onTextboxChangeSignUpHomeAddress = this.onTextboxChangeSignUpHomeAddress.bind(this);
     this.onTextboxChangeSignUpPassword = this.onTextboxChangeSignUpPassword.bind(this);
+    this.onTextboxChangeSignUpHouseNumber = this.onTextboxChangeSignUpHouseNumber.bind(this);
+    this.onTextboxChangeSignUpStreetName = this.onTextboxChangeSignUpStreetName.bind(this);
+    this.onTextboxChangeSignUpAddressType = this.onTextboxChangeSignUpAddressType.bind(this);
+    this.onTextboxChangeSignUpCity = this.onTextboxChangeSignUpCity.bind(this);
+    this.onTextboxChangeSignUpState = this.onTextboxChangeSignUpState.bind(this);
     
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
@@ -74,40 +82,54 @@ class Login extends Component {
       signInEmail: event.target.value,
     });
   }
-
   onTextboxChangeSignInPassword(event) {
     this.setState({
       signInPassword: event.target.value,
     });
   }
-
   onTextboxChangeSignUpFirstName(event) {
     this.setState({
       firstName: event.target.value,
     });
   }
-
   onTextboxChangeSignUpLastName(event) {
     this.setState({
       lastName: event.target.value,
     });
   }
-
   onTextboxChangeSignUpEmail(event) {
     this.setState({
       signUpEmail: event.target.value,
     });
   }
-
-  onTextboxChangeSignUpHomeAddress(event) {
-    this.setState({
-      signUpHomeAddress: event.target.value,
-    });
-  }
-
   onTextboxChangeSignUpPassword(event) {
     this.setState({
       signUpPassword: event.target.value,
+    });
+  }
+  onTextboxChangeSignUpHouseNumber(event) {
+    this.setState({
+      signUpHouseNumber: event.target.value,
+    });
+  }
+  onTextboxChangeSignUpStreetName(event) {
+    this.setState({
+      signUpStreetName: event.target.value,
+    });
+  }
+  onTextboxChangeSignUpAddressType(event) {
+    this.setState({
+      signUpAddressType: event.target.value,
+    });
+  }
+  onTextboxChangeSignUpCity(event) {
+    this.setState({
+      signUpCity: event.target.value,
+    });
+  }
+  onTextboxChangeSignUpState(event) {
+    this.setState({
+      signUpState: event.target.value,
     });
   }
 
@@ -117,8 +139,12 @@ class Login extends Component {
       firstName,
       lastName,
       signUpEmail,
-      signUpHomeAddress,
       signUpPassword,
+      signUpHouseNumber,
+      signUpStreetName,
+      signUpAddressType,
+      signUpCity,
+      signUpState,
     } = this.state;
 
     this.setState({
@@ -135,8 +161,12 @@ class Login extends Component {
         firstName: firstName,
         lastName: lastName,
         email: signUpEmail,
-        homeAddress: signUpHomeAddress,
         password: signUpPassword,
+        houseNumber: signUpHouseNumber,
+        streetName: signUpStreetName,
+        addressType: signUpAddressType,
+        city: signUpCity,
+        state: signUpState
       }),
     }).then(res => res.json())
       .then(json => {
@@ -174,7 +204,12 @@ class Login extends Component {
             if (json.success) {
               setInStorage('Electioneer', { 
                 token: json.token,
-                name: json.firstName
+                name: json.firstName,
+                houseNumber: json.houseNumber,
+                streetName: json.streetName,
+                addressType: json.addressType,
+                city: json.city,
+                state: json.state
               });
               this.setState({
                 // firstName: json.firstName,
@@ -221,11 +256,15 @@ class Login extends Component {
         if (json.success) {
           setInStorage('Electioneer', { 
             token: json.token,
-            name: json.firstName
+            name: json.firstName,
+            houseNumber: json.houseNumber,
+            streetName: json.streetName,
+            addressType: json.addressType,
+            city: json.city,
+            state: json.state
           });
           this.setState({
             firstName: json.firstName,
-            lastName: '',
             signInError: json.message,
             isLoading: false,
             signInPassword: '',
@@ -295,8 +334,12 @@ class Login extends Component {
       firstName,
       lastName,
       signUpEmail,
-      signUpHomeAddress,
       signUpPassword,
+      signUpHouseNumber,
+      signUpStreetName,
+      signUpAddressType,
+      signUpCity,
+      signUpState,
       signUpError,
     } = this.state;
 
@@ -384,16 +427,40 @@ class Login extends Component {
               onChange={this.onTextboxChangeSignUpEmail}
             /><br />
             <input
-              type="homeAddress"
-              placeholder="Home Address"
-              value={signUpHomeAddress}
-              onChange={this.onTextboxChangeSignUpHomeAddress}
-            /><br />
-            <input
               type="password"
               placeholder="Password"
               value={signUpPassword}
               onChange={this.onTextboxChangeSignUpPassword}
+            /><br />
+            <input
+              type="houseNumber"
+              placeholder="House Number"
+              value={signUpHouseNumber}
+              onChange={this.onTextboxChangeSignUpHouseNumber}
+            /><br />
+            <input
+              type="streetName"
+              placeholder="Street Name"
+              value={signUpStreetName}
+              onChange={this.onTextboxChangeSignUpStreetName}
+            /><br />
+            <input
+              type="addressType"
+              placeholder="Address Type (St., Blvd., Ave...)"
+              value={signUpAddressType}
+              onChange={this.onTextboxChangeSignUpAddressType}
+            /><br />
+            <input
+              type="city"
+              placeholder="City"
+              value={signUpCity}
+              onChange={this.onTextboxChangeSignUpCity}
+            /><br />
+            <input
+              type="state"
+              placeholder="State"
+              value={signUpState}
+              onChange={this.onTextboxChangeSignUpState}
             /><br />
             <br />
             <button onClick={this.onSignUp}>Sign Up</button>

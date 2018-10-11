@@ -11,7 +11,11 @@ module.exports = (app) => {
            firstName,
            lastName,
            password,
-           homeAddress
+           houseNumber,
+           streetName,
+           addressType,
+           city,
+           state
        } = body;
        let  { email } = body;
 
@@ -39,10 +43,34 @@ module.exports = (app) => {
                 message: 'Error: Password name cannot be blank.'
             })
         }
-        if(!homeAddress) {
+        if(!houseNumber) {
             return res.send({
                 success: false,
-                message: 'Error: Home Address cannot be blank.'
+                message: 'Error: House Number cannot be blank.'
+            })
+        }
+        if(!streetName) {
+            return res.send({
+                success: false,
+                message: 'Error: Street Name cannot be blank.'
+            })
+        }
+        if(!addressType) {
+            return res.send({
+                success: false,
+                message: 'Error: Address Type cannot be blank.'
+            })
+        }
+        if(!city) {
+            return res.send({
+                success: false,
+                message: 'Error: City cannot be blank.'
+            })
+        }
+        if(!state) {
+            return res.send({
+                success: false,
+                message: 'Error: State cannot be blank.'
             })
         }
 
@@ -70,11 +98,15 @@ module.exports = (app) => {
         // Save the new user
         const newUser = new User();
 
-        newUser.email = email;
         newUser.firstName = firstName;
         newUser.lastName = lastName;
-        newUser.homeAddress = homeAddress;
+        newUser.email = email;
         newUser.password = newUser.generateHash(password);
+        newUser.houseNumber = houseNumber;
+        newUser.streetName = streetName;
+        newUser.addressType = addressType;
+        newUser.city = city;
+        newUser.state = state;
     
         newUser.save((err, user) => {
             if(err){
@@ -85,7 +117,6 @@ module.exports = (app) => {
             }
             return res.send({
                 success: true,
-                message: 'Signed up',
             });
         });
     }); // end of sign up 
@@ -151,7 +182,12 @@ module.exports = (app) => {
                 return res.send({
                     success: true,
                     token: doc._id,
-                    firstName: users[0].firstName
+                    firstName: user.firstName,
+                    houseNumber: user.houseNumber,
+                    streetName: user.streetName,
+                    addressType: user.addressType,
+                    city: user.city,
+                    state: user.state
                 })
             });
         })
