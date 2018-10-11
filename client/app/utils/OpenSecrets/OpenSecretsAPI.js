@@ -12,7 +12,7 @@ class OpenSecretsAPI extends Component {
     e.preventDefault();
     console.log('button pressed');
     axios.all([
-       axios.get('/candinfo'),
+      axios.get('/candinfo'),
       axios.get('/candindustry'),
       axios.get('/candSector')
     ])
