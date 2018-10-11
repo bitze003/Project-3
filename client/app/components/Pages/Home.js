@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-<<<<<<< HEAD
 import API from '../../utils/API';
-=======
-import Map from '../Map/Map';
-
->>>>>>> master
+import EarlyVoting from '../Partials/EarlyVoting/EarlyVoting'
 
 import {
     getFromStorage,
@@ -17,12 +13,14 @@ class Home extends Component {
         super(props);
     
         this.state = {
-          isLoading: true,
+            isLoading: true,
+            electionName: '',
+            electionDate: '',
+            earlyVoting: [],
         };
     }
 
     componentDidMount() {
-<<<<<<< HEAD
         const obj = getFromStorage('Electioneer');
         const houseNumber = obj.houseNumber;
         const streetName = obj.streetName;
@@ -32,19 +30,41 @@ class Home extends Component {
         
         API.getInformation(houseNumber, streetName, addressType, city, state)
         .then((res) => {
-            console.log(res);
+            const earlyVote = res.data.earlyVoteSites
+            this.setState({
+                electionName: res.data.election.name,
+                electionDate: res.data.election.electionDay,
+                earlyVoting: earlyVote,
+            });
         })
         .catch(err => console.log(err));
-=======
-       
->>>>>>> master
     }
     
     render() {
+        const sizeOfEarlyVoting = this.state.earlyVoting.filter(member => member)
+        const numEarlyVotingLocations = sizeOfEarlyVoting.length
+        const centerStyle = {
+            textAlign: 'center'
+        }
+      
         return(
         <div className="container">
-            <h1>Home Page</h1> 
-            <Map/>
+        <h1>Home Page</h1> 
+            <h4>{this.state.electionName}</h4>
+            <h6>{this.state.electionDate}</h6>
+            <h6 style={centerStyle}>Early Voting!</h6>
+            <h6>You have <strong>{numEarlyVotingLocations}</strong> locations to early vote.</h6>
+            {this.state.earlyVoting.map( item => (
+                <EarlyVoting 
+                key = {item.address.locationName}
+                address = {item.address}
+                pollingHours = {item.pollingHours.split(/(\r\n|\n|\r)/gm)}
+                startDate = {item.startDate}
+                endDate = {item.endDate}
+            />
+            ))}
+    
+            {/* <Map/> */}
         </div>
         )
     }
