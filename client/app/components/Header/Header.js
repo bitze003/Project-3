@@ -59,17 +59,17 @@ class Header extends Component {
         <div>
           <nav className="navbar navbar-expand-sm navbar-light bg-light" style={navStyle}>
             <div className="container">
-              <a className="navbar-brand" href="#">Electioneer</a>
+              <a className="navbar-brand" href="/Home">Electioneer</a>
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
               <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul className="navbar-nav" >
                   <li className="nav-item">
-                    <a className="nav-link" href="#">My Ballot</a>
+                    <a className="nav-link" href="./Ballot">My Ballot</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">Polling Place</a>
+                    <a className="nav-link" href="./Polling">Polling Place</a>
                   </li>
                   <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle"  href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

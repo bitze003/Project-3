@@ -10,11 +10,11 @@ class Api extends Component {
   }
 
   retrieveCandadites() {
-    var houseNumber = "1112";
-    var address = "W25th";
-    var addressType = "st";
-    var city = "Minneapolis";
-    var state = "MN";
+    var houseNumber = "100";
+    var address = "Winchester";
+    var addressType = "rd";
+    var city = "Lakewood";
+    var state = "NY";
 
     var queryURL =
       "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyCXwoG3eT07HmPYzM402gKblv-_KJWL3jo&address=" +
@@ -62,8 +62,8 @@ class Api extends Component {
                 //console.log(contests)
                   return (
                     <div
-                    style={{marginTop: 10}}
-                      className="panel-heading "
+                    style={{width: 500, backgroundColor: "#D3D3D3", marginTop: 20, borderRadius: 10, marginLeft: "auto", marginRight: "auto", fontFamily:"'Work Sans', sans-serif"}}
+                    className="panel-heading "
                       role="tab"
                       id={"heading" +  i}
                     >

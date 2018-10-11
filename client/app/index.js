@@ -13,6 +13,8 @@ import NotFound from './components/App/NotFound';
 
 import Login from './components/Pages/Login';
 import Home from './components/Pages/Home';
+import Ballot from './components/Pages/Ballot';
+import Polling from './components/Pages/Polling';
 
 import './styles/styles.scss';
 
@@ -21,7 +23,9 @@ render((
     <App>
       <Switch>
         <Route exact path="/" component={Login}/>
-        <Route path="/home" component={Home}/>
+        <Route path="/Home" component={Home}/>
+        <Route path="/ballot" component={Ballot}/>
+        <Route path="/Polling" component={Polling}/>
         <Route component={NotFound}/>
       </Switch>
     </App>
