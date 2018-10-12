@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 // import './App.css';
 
 import axios from 'axios';
-
+//change candinfo from {} to a []
 class OpenSecretsAPI extends Component {
     state = {
-    candInfo: {}
+    candInfo: []
   }
   
   makeApiCall = (e) =>{
@@ -26,8 +26,12 @@ class OpenSecretsAPI extends Component {
           candInfo.cash_on_hand = infores.data.response.summary[0]["$"].cash_on_hand;
           candInfo.candIndustry = industryres.data.response.industries[0].industry[0]["$"].industry_name;
           candInfo.candSector = sectorres.data.response.sectors[0].sector[0]["$"].sector_name;
-          
+
+
+
+
           return {candInfo};
+
         });
       }));
   }
@@ -39,6 +43,13 @@ class OpenSecretsAPI extends Component {
       <div>Cash on hand:{this.state.candInfo.cash_on_hand} </div>
       <div>Industry: {this.state.candInfo.candIndustry}</div>
       <div>Sector Name: {this.state.candInfo.candSector}</div>
+      <div>{this.state.candInfo.candSector ? this.state.candInfo.candSector.map(sector => {
+        return(
+          <p>{sector}</p>
+        )
+    
+      })
+    : ""}</div>
       </div>
     );
   }
