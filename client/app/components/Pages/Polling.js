@@ -1,37 +1,33 @@
-import React, { Component } from 'react';
-import 'whatwg-fetch';
-import Header from '../Header/Header';
-import Polling from '../Polling/Polling';
+import React, { Component } from "react";
+import "whatwg-fetch";
+import Header from "../Header/Header";
+import Polling from "../Polling/Polling";
+import Map from "../Map/Map";
 
-import {
-    getFromStorage,
-    setInStorage,
-  } from '../../utils/storage';
+import { getFromStorage, setInStorage } from "../../utils/storage";
 
 class Ballot extends Component {
-    constructor(props) {
-        super(props);
-    
-        this.state = {
-          isLoading: true,
-        };
-    }
+  constructor(props) {
+    super(props);
 
-    componentDidMount() {
-        
-    }
-    
-    render() {
-        return(
-        <div className="container">
-            <Header />
-            <h1>Polling Page</h1>
+    this.state = {
+      isLoading: true
+    };
+  }
 
-            <Polling />
-            
+  componentDidMount() {}
+
+  render() {
+    return (
+      <div>
+        <Header />
+        <div className="jumbotron row" id="pollingJumbo">
+          <Map />
+          <Polling />
         </div>
-        )
-    }
+      </div>
+    );
+  }
 }
 
 export default Ballot;

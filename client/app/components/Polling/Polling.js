@@ -12,9 +12,9 @@ class Polling extends Component {
  returnAddress(){
 
     var addressDetails = {
-     houseNumber : "2417",
-     address :"Garfield",
-     addressType : "ave",
+     houseNumber : "1112",
+     address :"W25th",
+     addressType : "st",
      city : "Minneapolis",
      yourState : "MN"
 
@@ -59,21 +59,21 @@ class Polling extends Component {
     //console.log(stateData[5].name)
 
     return (
-      <div>
-        <h3> Local Polling Location</h3>
+      <div className="col-sm-8"style={{ textAlign:"center"}}>
+        <h3> Your Local Polling Location<br></br><br></br></h3>
 
         {this.state.pollingLocations
           ? this.state.pollingLocations.map(polling => {
               //console.log(this.state);
 
               return (
-                <div
-                  // style={{
-                  //   backgroundColor: "#D3D3D3",
-                  //   borderRadius: 10,
-                  //   width: 300,
-                  //   textAlign: "center"
-                  // }}
+                <div id="pole"
+                  style={{
+                   
+                    borderRadius: 10,
+                    width: "100%",
+                    textAlign: "center"
+                  }}
                 >
                   <p id="locationName">{polling.address.locationName}</p>
                   <p id="line1">{polling.address.line1}</p>
