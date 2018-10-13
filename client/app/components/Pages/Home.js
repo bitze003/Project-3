@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import API from '../../utils/API';
+import Map from '../Map/Map';
+
 import EarlyVoting from '../Partials/EarlyVoting/EarlyVoting'
 
 import {
@@ -40,6 +42,7 @@ class Home extends Component {
             });
         })
         .catch(err => console.log(err));
+       
     }
     
     render() {
