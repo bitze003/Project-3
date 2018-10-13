@@ -4,13 +4,17 @@ import React, { Component } from 'react';
 import axios from 'axios';
 //change candinfo from {} to a []
 class OpenSecretsAPI extends Component {
-    state = {
+  constructor(props){  
+    super(props)
+    this.state = {
     candInfo: []
   }
-  
+  this.makeApiCall = this.makeApiCall.bind(this)
+}
   makeApiCall = (e) =>{
     e.preventDefault();
     console.log('button pressed');
+    const self = this;
     axios.all([
        axios.get('/candinfo'),
       axios.get('/candindustry'),
@@ -21,37 +25,43 @@ class OpenSecretsAPI extends Component {
         console.log(infores);
         console.log(industryres);
         console.log(sectorres);
-        this.setState(({ candInfo }) => {
-          candInfo.name = infores.data.response.summary[0]["$"].cand_name;
-          candInfo.cash_on_hand = infores.data.response.summary[0]["$"].cash_on_hand;
-          candInfo.candIndustry = industryres.data.response.industries[0].industry[0]["$"].industry_name;
-          candInfo.candSector = sectorres.data.response.sectors[0].sector[0]["$"].sector_name;
+        for(let i = 0; i < sectorres.data.response.sectors[0].sector.length; i++ ){
+        const constObject = {
+          
+          name: infores.data.response.summary[0]["$"].cand_name,
+          // cash_on_hand: infores.data.response.summary[0]["$"].cash_on_hand,
+          // candIndustry:industryres.data.response.industries[0].industry[0]["$"].industry_name,
+          sectorName: sectorres.data.response.sectors[0].sector[i]["$"].sector_name,
+          totalAmount: sectorres.data.response.sectors[0].sector[i]["$"].total  
+            
+        }
+        self.setState({
+          candInfo: [...this.state.candInfo, constObject]
+        })
+        // self.setState({candInfo: constObject})
+      }
 
-
-
-
-          return {candInfo};
-
-        });
       }));
   }
   render() {
+    console.log(this.state.candInfo)
     return (
       <div>
         <input type="submit" value="Submit"onClick={this.makeApiCall}></input>
       <div> Name: {this.state.candInfo.name} </div>
-      <div>Cash on hand:{this.state.candInfo.cash_on_hand} </div>
-      <div>Industry: {this.state.candInfo.candIndustry}</div>
-      <div>Sector Name: {this.state.candInfo.candSector}</div>
-      <div>{this.state.candInfo.candSector ? this.state.candInfo.candSector.map(sector => {
+      {/* <div>Donations by sector:{this.state.candInfo.sectorName} </div> */}
+      {/* <div>Industry: {this.state.candInfo.candIndustry}</div> */}
+      {/* <div>Sector Name: {this.state.candInfo.totalAmount}</div> */}
+      <div>{this.state.candInfo ? this.state.candInfo.map(cand => {
         return(
-          <p>{sector}</p>
+          <h1>total amount ${cand.sectorName} {cand.totalAmount} </h1>
         )
     
       })
     : ""}</div>
       </div>
     );
+    
   }
 }
 
