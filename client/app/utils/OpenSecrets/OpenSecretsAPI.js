@@ -8,6 +8,7 @@ class OpenSecretsAPI extends Component {
     super(props)
     this.state = {
     candInfo: []
+    
   }
   this.makeApiCall = this.makeApiCall.bind(this)
 }
@@ -32,8 +33,9 @@ class OpenSecretsAPI extends Component {
           // cash_on_hand: infores.data.response.summary[0]["$"].cash_on_hand,
           // candIndustry:industryres.data.response.industries[0].industry[0]["$"].industry_name,
           sectorName: sectorres.data.response.sectors[0].sector[i]["$"].sector_name,
-          totalAmount: sectorres.data.response.sectors[0].sector[i]["$"].total  
-            
+          amount: sectorres.data.response.sectors[0].sector[i]["$"].total, 
+          totalAmount: sectorres.data.response.sectors[0].sector[i]["$"].total 
+          
         }
         self.setState({
           candInfo: [...this.state.candInfo, constObject]
@@ -51,7 +53,7 @@ class OpenSecretsAPI extends Component {
       <div> Name: {this.state.candInfo.name} </div>
       <div>{this.state.candInfo ? this.state.candInfo.map(cand => {
         return(
-          <h3>Industry Name: {cand.sectorName}<br></br> Total Amount $: {cand.totalAmount} </h3>
+          <h3>Industry Name: {cand.sectorName}<br></br> Total Amount $: {cand.amount} </h3>
         )
     
       })
