@@ -117,6 +117,7 @@ module.exports = (app) => {
             }
             return res.send({
                 success: true,
+                message: 'signed up'
             });
         });
     }); // end of sign up 
