@@ -7,8 +7,8 @@ class OpenSecretsAPI extends Component {
   constructor(props){  
     super(props)
     this.state = {
-    candInfo: []
-    
+    candInfo: [],
+    candID: ""
   }
   this.makeApiCall = this.makeApiCall.bind(this)
 }
@@ -46,7 +46,7 @@ class OpenSecretsAPI extends Component {
       }));
   }
   render() {
-    console.log(this.state.candInfo)
+    // console.log(this.state.candInfo)
     return (
       <div>
         <input type="submit" value="Submit"onClick={this.makeApiCall}></input>

@@ -1,17 +1,24 @@
 import React, { Component } from "react";
 import axios from "axios";
 import API from '../../utils/API';
+import cid from "../../utils/OpenSecrets/cid"
 // import openSecrets from '../../utils/OpenSecrets'
 import {
   getFromStorage,
   setInStorage,
 } from '../../utils/storage';
+import OpenSecretsAPI from "../../utils/OpenSecrets/OpenSecretsAPI";
 
 class Api extends Component {
   constructor(props) {
     super(props);
-    this.state = { contests: [] };
+    this.state = { 
+      contests: [],
+      candId
+    
+    };
     this.retrieveCandadites = this.retrieveCandadites.bind(this);
+    
   }
 
   retrieveCandadites() {
@@ -68,6 +75,31 @@ class Api extends Component {
     })
     .catch(err => console.log(err));
   }
+    loadOpenSecrets(event){
+      const candidateName = event.target.innerText
+     const formateName = (name) => {
+       let nameArray = name.split (" ")
+        .reverse()
+        .toString()
+        .replace(",", ", ");
+        
+      return (nameArray)
+      console.log(event.target.innerText)
+     }
+     const formattedCandidateName = formateName(candidateName);
+
+     const candidateIds = cid.filter ((candidate)=> {
+        return (candidate.CRPName == formattedCandidateName);
+     });
+     if (! candidateIds.length > 0) 
+
+      return;
+      const realCandidateId = candidateIds[0].CID
+     
+     
+     console.log(formateName(candidateName))
+     console.log(realCandidateId)
+    }
 
   render() {
     return (
@@ -129,6 +161,7 @@ class Api extends Component {
                         contests.candidates.map(candidate => {
                           return (
                             <div
+                              
                               id={"collapse" + i}
                               // style={{
                               //   width: 550,
@@ -146,11 +179,12 @@ class Api extends Component {
                               }
                               role="tabpanel"
                               aria-labelledby={"#heading" + i}
-                            >
+                            ><OpenSecretsAPI candId={this.state.candId} />
                               
                               <div className="panel-body">
                                 {" "}
-                                <h3
+                                <h3 onClick={this.loadOpenSecrets}
+                                
                                   // style={{
                                   //   textDecoration: "underline",
                                   //   marginLeft: 20
