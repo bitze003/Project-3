@@ -49,12 +49,9 @@ class OpenSecretsAPI extends Component {
       <div>
         <input type="submit" value="Submit"onClick={this.makeApiCall}></input>
       <div> Name: {this.state.candInfo.name} </div>
-      {/* <div>Donations by sector:{this.state.candInfo.sectorName} </div> */}
-      {/* <div>Industry: {this.state.candInfo.candIndustry}</div> */}
-      {/* <div>Sector Name: {this.state.candInfo.totalAmount}</div> */}
       <div>{this.state.candInfo ? this.state.candInfo.map(cand => {
         return(
-          <h1>total amount ${cand.sectorName} {cand.totalAmount} </h1>
+          <h3>Industry Name: {cand.sectorName}<br></br> Total Amount $: {cand.totalAmount} </h3>
         )
     
       })
