@@ -166,7 +166,7 @@ class Login extends Component {
         streetName: signUpStreetName,
         addressType: signUpAddressType,
         city: signUpCity,
-        state: signUpState
+        state: signUpState,
       }),
     }).then(res => res.json())
       .then(json => {
@@ -174,11 +174,15 @@ class Login extends Component {
           this.setState({
             signUpError: json.message,
             isLoading: false,
-            // firstName: '',
-            // lastName: '',
-            // signUpEmail: '',
-            // signUpHomeAddress: '',
-            // signUpPassword: '',
+            firstName: '',
+            lastName: '',
+            signUpEmail: '',
+            signUpPassword: '',
+            signUpHouseNumber: '',
+            signUpStreetName: '',
+            signUpAddressType: '',
+            signUpCity: '',
+            signUpState: ''
           });
         } else {
           console.log(user);
@@ -200,7 +204,6 @@ class Login extends Component {
           }),
         }).then(res => res.json())
           .then(json => {
-            console.log('json :' + json);
             if (json.success) {
               setInStorage('Electioneer', { 
                 token: json.token,
@@ -212,12 +215,11 @@ class Login extends Component {
                 state: json.state
               });
               this.setState({
-                // firstName: json.firstName,
-                // lastName: '',
+                firstName: json.firstName,
                 signInError: json.message,
                 isLoading: false,
-                // signInPassword: '',
-                // signInEmail: '',
+                signInPassword: '',
+                signInEmail: '',
                 token: json.token,
               });
             } else {
@@ -240,7 +242,6 @@ class Login extends Component {
     this.setState({
       isLoading: true,
     });
-
     // Post request to backend
     fetch('/api/account/signin', {
       method: 'POST',
@@ -267,9 +268,9 @@ class Login extends Component {
             firstName: json.firstName,
             signInError: json.message,
             isLoading: false,
-            signInPassword: '',
-            signInEmail: '',
-            token: json.token,
+            signUpPassword: '',
+            signUpEmail: '',
+            token: json.token
           });
         } else {
           this.setState({
@@ -286,7 +287,6 @@ class Login extends Component {
     });
     const obj = getFromStorage('Electioneer');
     if (obj && obj.token) {
-      
       // Verify token
       fetch('/api/account/logout?token=' + obj.token)
         .then(res => res.json())

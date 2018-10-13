@@ -7,6 +7,7 @@ import {
     getFromStorage,
     setInStorage,
   } from '../../utils/storage';
+import { MongooseDocument } from 'mongoose';
 
 class Home extends Component {
     constructor(props) {
@@ -27,9 +28,10 @@ class Home extends Component {
         const addressType = obj.addressType;
         const city = obj.city;
         const state = obj.state;
-        
+        // get info from google civic info api
         API.getInformation(houseNumber, streetName, addressType, city, state)
         .then((res) => {
+            console.log(res)
             const earlyVote = res.data.earlyVoteSites
             this.setState({
                 electionName: res.data.election.name,
@@ -46,13 +48,12 @@ class Home extends Component {
         const centerStyle = {
             textAlign: 'center'
         }
-      
         return(
         <div className="container">
         <h1>Home Page</h1> 
-            <h4>{this.state.electionName}</h4>
-            <h6>{this.state.electionDate}</h6>
-            <h6 style={centerStyle}>Early Voting!</h6>
+            <h4 style={centerStyle}>{this.state.electionName}</h4>
+            <h6 style={centerStyle}>{this.state.electionDate}</h6>
+            <h6>Early Voting!</h6>
             <h6>You have <strong>{numEarlyVotingLocations}</strong> locations to early vote.</h6>
             {this.state.earlyVoting.map( item => (
                 <EarlyVoting 
@@ -63,8 +64,6 @@ class Home extends Component {
                 endDate = {item.endDate}
             />
             ))}
-    
-            {/* <Map/> */}
         </div>
         )
     }

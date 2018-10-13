@@ -1,8 +1,8 @@
 import axios from "axios";
-require('dotenv').config({path: __dirname + '/.env'});
+require('dotenv').config();
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load();
-}
+} //{path: __dirname + '/.env'}
 // TODO: ADD SAFEGUARD S.T. 'addressType' ('st' 'ave' 'blvd') end with a '.', then remove period at ".S%20City%20"
 const API = {
   getInformation: function(houseNumber, streetName, addressType, city, state) {

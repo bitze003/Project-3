@@ -1,5 +1,5 @@
 import React from "react";
-import EarlyVotingHours from '../EarlyVotingHours/EarlyVotingHours';
+import { networkInterfaces } from "os";
 
 const EarlyVoting = props => (
   
@@ -19,8 +19,11 @@ const EarlyVoting = props => (
       <br />
       <div>
       <p>Polling Hours:</p>
-      {console.log(props.pollingHours)}
+      {console.log(props.startDate)}
+   
+   
       {props.pollingHours}
+
       </div>
       <br />
     </div>
