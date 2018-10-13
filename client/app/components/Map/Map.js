@@ -1,48 +1,71 @@
 import React, { Component } from "react";
+import axios from "axios";
+import Polling from "../../components/Polling/Polling";
+import stateData from "../Polling/States.json";
 
 
 
 
-class Map extends Component {
+class Map extends Polling {
+
+
 
     componentDidMount() {
-        this.renderMap()
+        this.retrieveCandadites();
+        this.renderMap();
     }
 
     renderMap = () => {
         loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCXwoG3eT07HmPYzM402gKblv-_KJWL3jo&callback=initMap")
         window.initMap = this.initMap;
         window.addMarker = this.addMarker;
+        console.log()
     }
+
 
     initMap = () => {
+
+
+        var geocoder = new window.google.maps.Geocoder();
         var map = new window.google.maps.Map(document.getElementById('map'), {
             center: { lat: 44.9537, lng: -93.0900 },
-            zoom: 10
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.HYBRID
         });
-    }
 
-    addMarker = () => {
-        var address = document.getElementById('address').value;
-        window.geocoder.geocode({ 'address': address }, function (results, status) {
-            if (status == window.google.maps.GeocoderStatus.OK) {
-                window.map.setCenter(results[0].geometry.location);
-                var marker = new window.google.maps.Marker({
-                    map: window.map,
-                    position: results[0].geometry.location
+        var address = ("Jefferson Community School");
+        /* alert(address); */
+        geocoder.geocode({ address: address }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location,
+                    icon: ''
                 });
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
+            var infoWindow = new google.maps.InfoWindow({
+               
+                content:  '<p><strong>This is your Polling Place<br><a href="https://www.google.com/maps/dir/'+address+'"> Click for Directions!</a></strong></p>'
+            });
+            marker.addListener('click', function() {
+                infoWindow.open(map, marker);
+            });
         });
+
     }
+
+
+
     render() {
         return (
-            <main>
-                <div id="map" style={{height : "60vh", width : "30vw", float:"right", marginTop:"2%"}}>
-  </div>
-      </main >   
-    )
+
+            <div id="map" className="map col-sm-4" style={{ height: "60vh", width: "30vw", marginTop: "0%" }}>
+            </div>
+
+        )
     }
 }
 

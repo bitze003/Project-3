@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 import Header from '../Header/Header';
 import Polling from '../Polling/Polling';
+import Map from '../Map/Map';
 
 import {
     getFromStorage,
@@ -23,12 +24,14 @@ class Ballot extends Component {
     
     render() {
         return(
-        <div className="container">
+        <div>
             <Header />
-            <h1>Polling Page</h1>
-
+            <div className="jumbotron row" id="pollingJumbo" >
+            <Map/>
             <Polling />
-            
+           
+
+            </div>
         </div>
         )
     }
