@@ -12,9 +12,9 @@ class Polling extends Component {
  returnAddress(){
 
     var addressDetails = {
-     houseNumber : "1112",
-     address :"W25th",
-     addressType : "st",
+     houseNumber : "2417",
+     address :"Garfield",
+     addressType : "ave",
      city : "Minneapolis",
      yourState : "MN"
 
@@ -68,12 +68,12 @@ class Polling extends Component {
 
               return (
                 <div
-                  style={{
-                    backgroundColor: "#D3D3D3",
-                    borderRadius: 10,
-                    width: 300,
-                    textAlign: "center"
-                  }}
+                  // style={{
+                  //   backgroundColor: "#D3D3D3",
+                  //   borderRadius: 10,
+                  //   width: 300,
+                  //   textAlign: "center"
+                  // }}
                 >
                   <p id="locationName">{polling.address.locationName}</p>
                   <p id="line1">{polling.address.line1}</p>
