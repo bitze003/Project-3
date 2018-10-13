@@ -52,6 +52,7 @@ class Home extends Component {
             textAlign: 'center'
         }
         return(
+
         <div className="container">
         <h1>Home Page</h1> 
             <h4 style={centerStyle}>{this.state.electionName}</h4>
