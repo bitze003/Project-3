@@ -11,7 +11,8 @@ class Map extends Polling {
 
 
     componentDidMount() {
-        this.retrieveCandadites();
+        this.returnAddress();
+        (this.returnAddress().houseNumber)
         this.renderMap();
     }
 
@@ -19,7 +20,7 @@ class Map extends Polling {
         loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCXwoG3eT07HmPYzM402gKblv-_KJWL3jo&callback=initMap")
         window.initMap = this.initMap;
         window.addMarker = this.addMarker;
-        console.log()
+       
     }
 
 
@@ -33,8 +34,8 @@ class Map extends Polling {
             mapTypeId: google.maps.MapTypeId.HYBRID
         });
 
-        var address = ("Jefferson Community School");
-        /* alert(address); */
+        var address = (this.returnAddress().houseNumber + " " + this.returnAddress().address + " " + this.returnAddress().addressType + " " + this.returnAddress().city + " " + this.returnAddress().yourState);
+         alert(address); 
         geocoder.geocode({ address: address }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
@@ -57,9 +58,8 @@ class Map extends Polling {
 
     }
 
-
-
     render() {
+       
         return (
 
             <div id="map" className="map col-sm-4" style={{ height: "60vh", width: "30vw", marginTop: "0%" }}>

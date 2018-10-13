@@ -14,17 +14,19 @@ class Api extends Component {
   }
 
   retrieveCandadites() {
-    var houseNumber = "1112";
-    var address = "W25th";
-    var addressType = "st";
-    var city = "Minneapolis";
-    var state = "MN";
+    const obj = getFromStorage('Electioneer');
+    console.log(obj);
+    const houseNumber = obj.houseNumber;
+    const streetName = obj.streetName;
+    const addressType = obj.addressType;
+    const city = obj.city;
+    const state = obj.state;
 
     var queryURL =
       "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyCXwoG3eT07HmPYzM402gKblv-_KJWL3jo&address=" +
       houseNumber +
       "%20" +
-      address +
+      streetName +
       "%20" +
       addressType +
       "S%20City%20" +
@@ -47,25 +49,6 @@ class Api extends Component {
 
   componentDidMount() {
     this.retrieveCandadites();
-
-    const obj = getFromStorage('Electioneer');
-    const houseNumber = obj.houseNumber;
-    const streetName = obj.streetName;
-    const addressType = obj.addressType;
-    const city = obj.city;
-    const state = obj.state;
-    // get info from google civic info api
-    API.getInformation(houseNumber, streetName, addressType, city, state)
-    .then((res) => {
-        console.log(res)
-        const earlyVote = res.data.earlyVoteSites
-        this.setState({
-            electionName: res.data.election.name,
-            electionDate: res.data.election.electionDay,
-            earlyVoting: earlyVote,
-        });
-    })
-    .catch(err => console.log(err));
   }
 
   render() {
