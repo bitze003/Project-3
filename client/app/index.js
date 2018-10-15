@@ -24,7 +24,7 @@ render((
       <Switch>
         <Route exact path="/" component={Login}/>
         <Route path="/Home" component={Home}/>
-        <Route path="/ballot" component={Ballot}/>
+        <Route path="/Ballot" component={Ballot}/>
         <Route path="/Polling" component={Polling}/>
         <Route component={NotFound}/>
       </Switch>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import API from '../../utils/API';
-import Map from '../Map/Map';
 
 import EarlyVoting from '../Partials/EarlyVoting/EarlyVoting'
 
@@ -9,7 +8,7 @@ import {
     getFromStorage,
     setInStorage,
   } from '../../utils/storage';
-import { MongooseDocument } from 'mongoose';
+//import { MongooseDocument } from 'mongoose';
 
 class Home extends Component {
     constructor(props) {
@@ -20,16 +19,19 @@ class Home extends Component {
             electionName: '',
             electionDate: '',
             earlyVoting: [],
+            token: ''
         };
     }
 
     componentDidMount() {
+        
         const obj = getFromStorage('Electioneer');
         const houseNumber = obj.houseNumber;
         const streetName = obj.streetName;
         const addressType = obj.addressType;
         const city = obj.city;
         const state = obj.state;
+        const tkn = obj.token
         // get info from google civic info api
         API.getInformation(houseNumber, streetName, addressType, city, state)
         .then((res) => {
@@ -39,26 +41,46 @@ class Home extends Component {
                 electionName: res.data.election.name,
                 electionDate: res.data.election.electionDay,
                 earlyVoting: earlyVote,
+                token: tkn
             });
         })
         .catch(err => console.log(err));
-       
     }
     
     render() {
         const sizeOfEarlyVoting = this.state.earlyVoting.filter(member => member)
         const numEarlyVotingLocations = sizeOfEarlyVoting.length
         const centerStyle = {
-            textAlign: 'center'
+            textAlign: 'center',
+            marginTop: '15px'
+        } 
+        const inline = {
+            display: 'inline'
         }
+        const headerStyle = {
+            textAlign: 'center',
+            margin: '20px'
+        }
+        const electionTitle = {
+            textAlign: 'center',
+        }
+        const backgroundColor = {
+            backgroundColor: 'white'
+        }
+      
+ 
         return(
-
-        <div className="container">
-        <h1>Home Page</h1> 
-            <h4 style={centerStyle}>{this.state.electionName}</h4>
-            <h6 style={centerStyle}>{this.state.electionDate}</h6>
-            <h6>Early Voting!</h6>
-            <h6>You have <strong>{numEarlyVotingLocations}</strong> locations to early vote.</h6>
+        <div className="container" style={backgroundColor}>
+        <hr />
+            <h5 style={headerStyle}>Upcoming Election:</h5>
+            <h4 style={electionTitle}>
+                <div style={centerStyle}>{this.state.electionName}</div>
+                <div style={centerStyle}>{moment(this.state.electionDate).format('LLLL')}</div>
+            </h4>
+            <hr />
+            <h3>Early Voting!</h3>
+            <h6>You have <strong style={inline}>{numEarlyVotingLocations}</strong> locations for early voting.</h6>
+            <hr />
             {this.state.earlyVoting.map( item => (
                 <EarlyVoting 
                 key = {item.address.locationName}

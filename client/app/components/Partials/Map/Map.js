@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Polling from "../../components/Polling/Polling";
-import stateData from "../Polling/States.json";
+import Polling from "../PollingLocation/PollingLocation";
+import stateData from "../PollingLocation/States";
 
-
-
-
-class Map extends Polling {
-
-
+class Map extends Component {
 
     componentDidMount() {
-        this.retrieveCandadites();
+        // this.retrieveCandadites();
         this.renderMap();
     }
 
@@ -22,10 +17,7 @@ class Map extends Polling {
         console.log()
     }
 
-
     initMap = () => {
-
-
         var geocoder = new window.google.maps.Geocoder();
         var map = new window.google.maps.Map(document.getElementById('map'), {
             center: { lat: 44.9537, lng: -93.0900 },
@@ -57,8 +49,6 @@ class Map extends Polling {
 
     }
 
-
-
     render() {
         return (
 
@@ -69,7 +59,6 @@ class Map extends Polling {
     }
 }
 
-
 function loadScript(url) {
     var script = window.document.createElement("script");
     var index = window.document.getElementsByTagName("script")[0]
@@ -78,6 +67,5 @@ function loadScript(url) {
     script.defer = true;
     index.parentNode.insertBefore(script, index);
 }
-
 
 export default Map;
