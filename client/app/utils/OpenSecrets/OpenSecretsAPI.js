@@ -8,7 +8,7 @@ class OpenSecretsAPI extends Component {
     super(props)
     this.state = {
     candInfo: [],
-    candID: ""
+    candId: ""
   }
   this.makeApiCall = this.makeApiCall.bind(this)
 }
@@ -17,9 +17,9 @@ class OpenSecretsAPI extends Component {
     console.log('button pressed');
     const self = this;
     axios.all([
-      axios.get('/candinfo'),
-      axios.get('/candindustry'),
-      axios.get('/candSector')
+      axios.get(`/candinfo?candId=${this.props.candId}`),
+      axios.get(`/candindustry?candId=${this.props.candId}`),
+      axios.get(`/candSector?candId=${this.props.candId}`)
     ])
       .then (axios.spread((infores, industryres, sectorres)  => {
         // r = JSON.parse(r.trim());
@@ -30,8 +30,6 @@ class OpenSecretsAPI extends Component {
         const constObject = {
           
           name: infores.data.response.summary[0]["$"].cand_name,
-          // cash_on_hand: infores.data.response.summary[0]["$"].cash_on_hand,
-          // candIndustry:industryres.data.response.industries[0].industry[0]["$"].industry_name,
           sectorName: sectorres.data.response.sectors[0].sector[i]["$"].sector_name,
           amount: sectorres.data.response.sectors[0].sector[i]["$"].total, 
           totalAmount: sectorres.data.response.sectors[0].sector[i]["$"].total 
@@ -45,6 +43,8 @@ class OpenSecretsAPI extends Component {
 
       }));
   }
+
+
   render() {
     // console.log(this.state.candInfo)
     return (
@@ -65,3 +65,4 @@ class OpenSecretsAPI extends Component {
 }
 
 export default OpenSecretsAPI;
+

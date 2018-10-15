@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import API from '../../utils/API';
 import cid from "../../utils/OpenSecrets/cid"
-// import openSecrets from '../../utils/OpenSecrets'
 import {
   getFromStorage,
   setInStorage,
@@ -14,11 +13,11 @@ class Api extends Component {
     super(props);
     this.state = { 
       contests: [],
-      candId
+      candId: ""
     
     };
     this.retrieveCandadites = this.retrieveCandadites.bind(this);
-    
+    this.loadOpenSecrets = this.loadOpenSecrets.bind(this);
   }
 
   retrieveCandadites() {
@@ -75,6 +74,7 @@ class Api extends Component {
     })
     .catch(err => console.log(err));
   }
+
     loadOpenSecrets(event){
       const candidateName = event.target.innerText
      const formateName = (name) => {
@@ -87,19 +87,20 @@ class Api extends Component {
       console.log(event.target.innerText)
      }
      const formattedCandidateName = formateName(candidateName);
-
      const candidateIds = cid.filter ((candidate)=> {
         return (candidate.CRPName == formattedCandidateName);
      });
-     if (! candidateIds.length > 0) 
+        if (! candidateIds.length > 0) 
 
-      return;
+        return;
       const realCandidateId = candidateIds[0].CID
      
      
      console.log(formateName(candidateName))
      console.log(realCandidateId)
+     this.setState({candId: realCandidateId});
     }
+
 
   render() {
     return (
@@ -252,3 +253,4 @@ class Api extends Component {
 }
 
 export default Api;
+

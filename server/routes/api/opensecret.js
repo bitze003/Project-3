@@ -7,7 +7,7 @@ module.exports = (app) => {
   app.get('/candinfo', (req, res) => {
     axios.get('https://www.opensecrets.org/api/?method=candSummary', {
       params: {
-        cid: "N00033085",
+        cid: req.query.candId,
         cycle: "2018",
         ind: "k02",
         apikey: process.env.SECRET_KEY
@@ -29,7 +29,7 @@ module.exports = (app) => {
   app.get('/candindustry', (req, res) => {
     axios.get('https://www.opensecrets.org/api/?method=candIndustry', {
       params: {
-        cid: "N00033085",
+        cid: req.query.candId,
         cycle: "2018",
         ind: "k02",
         apikey: process.env.SECRET_KEY
@@ -51,7 +51,7 @@ module.exports = (app) => {
   app.get('/candSector', (req, res) => {
     axios.get('https://www.opensecrets.org/api/?method=candSector', {
       params: {
-        cid: "N00033085",
+        cid: req.query.candId,
         cycle: "2018",
         ind: "k02",
         apikey: process.env.SECRET_KEY
