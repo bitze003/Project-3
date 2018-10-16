@@ -5,6 +5,7 @@ import {
   getFromStorage,
   setInStorage,
 } from '../../utils/storage';
+import Header from '../Header/Header';
 
 class Login extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class Login extends Component {
     this.onSignUp = this.onSignUp.bind(this);
     this.toggleSignUp = this.toggleSignUp.bind(this);
   }
-
+  
   componentDidMount() {
     const obj = getFromStorage('Electioneer');
     if (obj && obj.token) {
@@ -232,8 +233,7 @@ class Login extends Component {
             signUpPassword: '',
             signUpEmail: '',
             token: json.token,
-          });
-          location.reload();
+          })
         } else {
           this.setState({
             signInError: json.message,
@@ -255,6 +255,8 @@ class Login extends Component {
       } 
     }
 
+   
+/********************** RENDER ***********************/
   render() {
     const {
       isLoading,
@@ -298,11 +300,17 @@ class Login extends Component {
     if (isLoading) {
       return (<div><p>Loading...</p></div>);
     }
+    if (token) {
+    return(
+      <Redirect to='/Home' />
+      )
+    }
 
     if (!token) {
       return (
-        
         <div style={centerStyle}>
+        <Header />
+        
         <p style={marginTop}>Welcome to Electioneer!</p>
           {
             (signedUp) ? (
@@ -330,7 +338,7 @@ class Login extends Component {
                 <button onClick = {this.onSignIn}>Sign In</button>
               <br />
               <br />
-                <button onClick={this.toggleSignUp} style={styleToggleSignUp}>Click Here to <p style={blueSignUp}>Sign Up!</p></button>
+                <button onClick={this.toggleSignUp} style={styleToggleSignUp}>Click Here to<p style={blueSignUp}>Sign Up!</p></button>
               </div>
           ):(
           <div className="signUpDiv">
@@ -404,13 +412,7 @@ class Login extends Component {
         </div>
       );
     }
-    if (token) {
-      return (
-        <div>
-          <Redirect to='/Home' />
-        </div>
-      );
-    }
+    
     
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component }  from 'react';
 import 'whatwg-fetch';
 
+
 import {
   getFromStorage,
   setInStorage,
@@ -11,7 +12,8 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      token: '',
+      location: {},
+      token: this.props.token,
       name: '',
       isLoading: false,
     };
@@ -20,8 +22,10 @@ class Header extends Component {
   };
 
   componentDidMount() {
-  const obj = getFromStorage('Electioneer');
-    console.log(this.location);
+    console.log(location)
+    this.setState({ location: location })
+
+    const obj = getFromStorage('Electioneer');
     if (obj && obj.token) {
 
       // Verify token
@@ -46,6 +50,7 @@ class Header extends Component {
       });
     }
 }
+
 
 logout() {
   this.setState({
@@ -87,6 +92,7 @@ logout() {
         <nav className="navbar navbar-expand-sm navbar-light bg-light" style={navStyle}>
           <div className="container">
             <a className="navbar-brand" href="/Login">Electioneer</a>
+            <div className="dot"></div>
           </div>
         </nav>
       ):(
