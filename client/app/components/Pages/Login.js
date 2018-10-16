@@ -5,6 +5,7 @@ import {
   getFromStorage,
   setInStorage,
 } from '../../utils/storage';
+import Home from '../Pages/Home';
 import Header from '../Header/Header';
 
 class Login extends Component {
@@ -15,6 +16,7 @@ class Login extends Component {
     this.state = {
       isLoading: true,
       signedUp: true,
+      pageSwitch: true,
       token: '',
       signUpError: '',
       signInError: '',
@@ -65,13 +67,14 @@ class Login extends Component {
             });
           } else {
             this.setState({
-              isLoading: false,
+              pageSwitch: false,
             });
           }
         });
     } else {
-      this.setState({
+      this.setState({   
         isLoading: false,
+        pageSwitch: false
       });
     }
   }
@@ -233,6 +236,7 @@ class Login extends Component {
             signUpPassword: '',
             signUpEmail: '',
             token: json.token,
+            pageSwitch: true
           })
         } else {
           this.setState({
@@ -262,6 +266,7 @@ class Login extends Component {
       isLoading,
       signedUp,
       token,
+      pageSwitch,
       signInError,
       signInEmail,
       signInPassword,
@@ -300,13 +305,16 @@ class Login extends Component {
     if (isLoading) {
       return (<div><p>Loading...</p></div>);
     }
-    if (token) {
+    if (pageSwitch) {
     return(
-      <Redirect to='/Home' />
+      <div>
+         <Redirect to='/Home' />
+      </div>
+     
       )
     }
 
-    if (!token) {
+    if (!pageSwitch) {
       return (
         <div style={centerStyle}>
         <Header />
