@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import stateData from "./States.json";
-
+import {
+  getFromStorage,
+  setInStorage,
+} from '../../utils/storage';
 class Polling extends Component {
   constructor(props) {
     super(props);
@@ -10,13 +13,17 @@ class Polling extends Component {
   }
 
  returnAddress(){
-
+  
+  const obj = getFromStorage('Electioneer');
+console.log("OBJ");
+console.log(obj);
+console.log("<-OBJ");
     var addressDetails = {
-     houseNumber : "1112",
-     address :"W25th",
-     addressType : "st",
-     city : "Minneapolis",
-     yourState : "MN"
+     houseNumber : obj.houseNumber,
+     address :obj.streetName,
+     addressType : obj.addressType,
+     city : obj.city,
+     yourState : obj.state
 
     }
     return addressDetails;
