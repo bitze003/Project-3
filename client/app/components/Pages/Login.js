@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import Home from './Home';
-import Header from '../Header/Header';
-
+import { Redirect }from 'react-router';
 import {
   getFromStorage,
   setInStorage,
@@ -47,13 +45,13 @@ class Login extends Component {
     
     this.onSignIn = this.onSignIn.bind(this);
     this.onSignUp = this.onSignUp.bind(this);
-    this.logout = this.logout.bind(this);
     this.toggleSignUp = this.toggleSignUp.bind(this);
   }
 
   componentDidMount() {
     const obj = getFromStorage('Electioneer');
     if (obj && obj.token) {
+      this.props.onLogIn;
       const { token } = obj;
       // Verify token
       fetch('/api/account/verify?token=' + token)
@@ -61,7 +59,7 @@ class Login extends Component {
         .then(json => {
           if (json.success) {
             this.setState({
-              token,
+              token: json.token,
               isLoading: false
             });
           } else {
@@ -173,6 +171,8 @@ class Login extends Component {
         if (json.success) {
           this.setState({
             signUpError: json.message,
+            signInError: json.message,
+            signedUp: true,
             isLoading: false,
             firstName: '',
             lastName: '',
@@ -182,54 +182,15 @@ class Login extends Component {
             signUpStreetName: '',
             signUpAddressType: '',
             signUpCity: '',
-            signUpState: ''
+            signUpState: '',
           });
         } else {
-          console.log(user);
           this.setState({
             signUpError: json.message,
             isLoading: false,
           });
         }
-      }).then(
-        // sign the user in
-        fetch('/api/account/signin', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: signUpEmail,
-            password: signUpPassword,
-          }),
-        }).then(res => res.json())
-          .then(json => {
-            if (json.success) {
-              setInStorage('Electioneer', { 
-                token: json.token,
-                name: json.firstName,
-                houseNumber: json.houseNumber,
-                streetName: json.streetName,
-                addressType: json.addressType,
-                city: json.city,
-                state: json.state
-              });
-              this.setState({
-                firstName: json.firstName,
-                signInError: json.message,
-                isLoading: false,
-                signInPassword: '',
-                signInEmail: '',
-                token: json.token,
-              });
-            } else {
-              this.setState({
-                signInError: json.message,
-                isLoading: false,
-              });
-            }
-          })
-      )
+      })
   }
 
   onSignIn() {
@@ -270,8 +231,9 @@ class Login extends Component {
             isLoading: false,
             signUpPassword: '',
             signUpEmail: '',
-            token: json.token
+            token: json.token,
           });
+          location.reload();
         } else {
           this.setState({
             signInError: json.message,
@@ -279,36 +241,6 @@ class Login extends Component {
           });
         }
       });
-  }
-
-  logout() {
-    this.setState({
-      isLoading: true,
-    });
-    const obj = getFromStorage('Electioneer');
-    if (obj && obj.token) {
-      // Verify token
-      fetch('/api/account/logout?token=' + obj.token)
-        .then(res => res.json())
-        .then(json => {
-          if (json.success) {
-            localStorage.clear();
-            this.setState({
-              token: '',
-              isLoading: false,
-              firstName: ''
-            });
-          } else {
-            this.setState({
-              isLoading: false,
-            });
-          }
-        });
-    } else {
-      this.setState({
-        isLoading: false,
-      });
-    }
   }
 
   toggleSignUp() {
@@ -359,6 +291,9 @@ class Login extends Component {
       color: 'blue',
       display: 'inline'
     }
+    const marginTop = {
+      marginTop: '20px'
+    }
 
     if (isLoading) {
       return (<div><p>Loading...</p></div>);
@@ -368,7 +303,7 @@ class Login extends Component {
       return (
         
         <div style={centerStyle}>
-        <p>Welcome to Electioneer!</p>
+        <p style={marginTop}>Welcome to Electioneer!</p>
           {
             (signedUp) ? (
               <div style={borderBox}>
@@ -377,7 +312,6 @@ class Login extends Component {
                     <p>{signInError}</p>
                   ) : (null)
                 }
-                <p>Sign In</p>
                 <input
                   type="email"
                   placeholder="Email"
@@ -393,14 +327,12 @@ class Login extends Component {
                 />
                 <br />
                 <br />
-                <button onClick={this.onSignIn}>Sign In</button>
+                <button onClick = {this.onSignIn}>Sign In</button>
               <br />
               <br />
                 <button onClick={this.toggleSignUp} style={styleToggleSignUp}>Click Here to <p style={blueSignUp}>Sign Up!</p></button>
               </div>
-
           ):(
-
           <div className="signUpDiv">
             {
               (signUpError) ? (
@@ -472,19 +404,14 @@ class Login extends Component {
         </div>
       );
     }
-
-    return (
-      <div>
-        <Header 
-        firstName={this.state.firstName}
-        token={this.state.token}
-        logout={this.logout}
-        />
-        <Home 
-
-        />
-      </div>
-    );
+    if (token) {
+      return (
+        <div>
+          <Redirect to='/Home' />
+        </div>
+      );
+    }
+    
   }
 }
 
