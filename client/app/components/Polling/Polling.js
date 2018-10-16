@@ -8,16 +8,14 @@ import {
 class Polling extends Component {
   constructor(props) {
     super(props);
-    this.state = { pollingLocations: [] };
-    this.retrieveCandadites = this.retrieveCandadites.bind(this);
+    this.state = { pollingLocations: []};
+    this.retrievePollingLocations = this.retrievePollingLocations.bind(this);
   }
 
  returnAddress(){
   
   const obj = getFromStorage('Electioneer');
-console.log("OBJ");
-console.log(obj);
-console.log("<-OBJ");
+
     var addressDetails = {
      houseNumber : obj.houseNumber,
      address :obj.streetName,
@@ -29,9 +27,8 @@ console.log("<-OBJ");
     return addressDetails;
  }
 
-  retrieveCandadites() {
- 
-    console.log(this.returnAddress().houseNumber);
+
+  retrievePollingLocations() {
 
     var queryURL =
       "https://www.googleapis.com/civicinfo/v2/voterinfo?key=AIzaSyCXwoG3eT07HmPYzM402gKblv-_KJWL3jo&address=" +
@@ -44,28 +41,90 @@ console.log("<-OBJ");
       this.returnAddress().city +
       "%20" +
       this.returnAddress().yourState +
-      "&electionId=2000";
+      "&electionId=6000";
 
-    const self = this;
-    axios
-      .get(queryURL)
-      .then(function(response) {
-        //console.log(response.data);
-        self.setState({ pollingLocations: response.data.pollingLocations });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    //const self = this;
+    axios.get(queryURL)
+    .then((response) => {
+      console.log(response);
+      
+      this.setState({pollingLocations: response.data.pollingLocations });
+      
+      this.renderMap();
+    })
+   .catch((error)=>{
+      console.log(error);
+   });
   }
+
+ 
+  renderMap = () => {
+
+
+    loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyCXwoG3eT07HmPYzM402gKblv-_KJWL3jo&callback=initMap")
+    window.initMap = this.initMap;
+    window.addMarker = this.addMarker;
+    
+}
+
+
+initMap = () => {
+    
+    var geocoder = new window.google.maps.Geocoder();
+
+    var map = new window.google.maps.Map(document.getElementById('map'), {
+        center: { lat: 44.9537, lng: -93.0900 },
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    });
+   
+    var address = (this.state.pollingLocations[0].address.locationName + " " + this.state.pollingLocations[0].address.line1 + " " + this.state.pollingLocations[0].address.city + " " + this.state.pollingLocations[0].address.state + " " + this.state.pollingLocations[0].address.zip);
+    console.log("state below here")
+    console.log(this.state.pollingLocations[0].address)
+    console.log("this is the address") 
+    console.log(address);
+    geocoder.geocode({ address: address }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+                icon: ''
+            });
+        } else {
+            //alert('Geocode was not successful for the following reason: ' + status);
+        }
+        var infoWindow = new google.maps.InfoWindow({
+           
+            content:  '<p><strong>This is your Polling Place<br><a href="https://www.google.com/maps/dir/'+address+'"> Click for Directions!</a></strong></p>'
+        });
+        marker.addListener('click', function() {
+            infoWindow.open(map, marker);
+        });
+    });
+  }
+  
+
+  
 
   componentDidMount() {
-    this.retrieveCandadites();
+    this.retrievePollingLocations();
+    //setTimeout(this.renderMap(), 2000);
+
   }
+  
 
   render() {
-    //console.log(stateData[5].name)
+   
 
     return (
+<div>
+
+<div id="map" className="map" style={{ height: "60vh", width: "30vw", marginTop: "0%" }}>
+            </div>
+
+
+
       <div className="col-sm-8"style={{ textAlign:"center"}}>
         <h3> Your Local Polling Location<br></br><br></br></h3>
 
@@ -117,7 +176,19 @@ console.log("<-OBJ");
               return <div />;
             })}
       </div>
+
+      </div>
     );
   }
 }
+
+function loadScript(url) {
+  var script = window.document.createElement("script");
+  var index = window.document.getElementsByTagName("script")[0]
+  script.src = url;
+  script.async = true;
+  script.defer = true;
+  index.parentNode.insertBefore(script, index);
+}
+
 export default Polling;
