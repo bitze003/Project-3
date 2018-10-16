@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
 import EarlyVoting from '../Partials/EarlyVoting/EarlyVoting'
-
+import Header from '../Header/Header'
 import {
     getFromStorage,
     setInStorage,
@@ -68,7 +68,11 @@ class Home extends Component {
             backgroundColor: 'white'
         }
         
-        return (<div className="container" style={backgroundColor}>
+        return (
+        <div>
+        <Header />
+        <div className="container" style={backgroundColor}>
+        
         <hr />
             <h5 style={headerStyle}>Upcoming Election:</h5>
             <h4 style={electionTitle}>
@@ -88,6 +92,7 @@ class Home extends Component {
                 endDate = {item.endDate}
             />
             ))}
+            </div>
         </div>)
     }
 }

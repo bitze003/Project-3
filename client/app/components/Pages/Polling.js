@@ -3,7 +3,7 @@ import "whatwg-fetch";
 
 import Polling from "../Partials/PollingLocation/PollingLocation";
 import Map from "../Partials/Map/Map";
-
+import Header from '../Header/Header';
 import { getFromStorage, setInStorage } from "../../utils/storage";
 
 class Ballot extends Component {
@@ -20,6 +20,7 @@ class Ballot extends Component {
   render() {
     return (
       <div>
+        <Header />
         <div className="jumbotron row" id="pollingJumbo">
           <Map />
           <Polling />
