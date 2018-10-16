@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import "whatwg-fetch";
-import Header from "../Header/Header";
-import Polling from "../Polling/Polling";
-
-
 import Polling from "../Partials/PollingLocation/PollingLocation";
 import Map from "../Partials/Map/Map";
 import Header from '../Header/Header';
