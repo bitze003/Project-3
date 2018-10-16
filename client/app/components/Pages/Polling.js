@@ -4,6 +4,9 @@ import Header from "../Header/Header";
 import Polling from "../Polling/Polling";
 
 
+import Polling from "../Partials/PollingLocation/PollingLocation";
+import Map from "../Partials/Map/Map";
+import Header from '../Header/Header';
 import { getFromStorage, setInStorage } from "../../utils/storage";
 
 class Ballot extends Component {

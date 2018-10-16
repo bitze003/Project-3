@@ -4,7 +4,7 @@ import stateData from "./States.json";
 import {
   getFromStorage,
   setInStorage,
-} from '../../utils/storage';
+} from '../../../utils/storage';
 class Polling extends Component {
   constructor(props) {
     super(props);

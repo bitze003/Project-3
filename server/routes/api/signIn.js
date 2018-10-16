@@ -37,6 +37,13 @@ module.exports = (app) => {
                 message: 'Error: Email name cannot be blank.'
             })
         }
+        const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if (!filter.test(email)) {
+           return res.send({
+                success: false,
+                message: 'Error: Invalid Email Address'
+           })
+        }
         if(!password) {
             return res.send({
                 success: false,
@@ -76,6 +83,7 @@ module.exports = (app) => {
 
     email = email.toLowerCase();
     email = email.trim();
+       
     // Steps:
     // 1. Verify email doesn't exist
     // 2. Save
@@ -117,7 +125,7 @@ module.exports = (app) => {
             }
             return res.send({
                 success: true,
-                message: 'signed up'
+                message: 'You Are Signed Up! Please Log In.'
             });
         });
     }); // end of sign up 
