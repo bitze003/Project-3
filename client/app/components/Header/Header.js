@@ -1,6 +1,5 @@
 import React, { Component }  from 'react';
 import 'whatwg-fetch';
-import { Redirect } from 'react-router';
 
 import {
   getFromStorage,
@@ -12,10 +11,9 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      name: '',
-      isLoading: true,
       token: '',
-      loggedIn: false
+      name: '',
+      isLoading: false,
     };
 
     this.logout = this.logout.bind(this);
@@ -23,9 +21,9 @@ class Header extends Component {
 
   componentDidMount() {
   const obj = getFromStorage('Electioneer');
-  console.log(obj)
+    console.log(this.location);
     if (obj && obj.token) {
-      this.setState({ loggedIn: true})
+
       // Verify token
       fetch('/api/account/verify?token=' + obj.token)
         .then(res => res.json())
@@ -35,7 +33,6 @@ class Header extends Component {
               token: obj.token,
               name: obj.name,
               isLoading: false,
-              loggedIn: true
             });
           } else {
             this.setState({
@@ -66,7 +63,6 @@ logout() {
             token: '',
             isLoading: false,
             firstName: '',
-            loggedIn: false
           });
         } else {
           this.setState({
@@ -87,7 +83,7 @@ logout() {
     }
     return (
       <div>
-          {(!this.state.loggedIn) ? (
+          {(!this.state.token) ? (
         <nav className="navbar navbar-expand-sm navbar-light bg-light" style={navStyle}>
           <div className="container">
             <a className="navbar-brand" href="/Login">Electioneer</a>
@@ -98,7 +94,7 @@ logout() {
           <nav className="navbar navbar-expand-sm navbar-light bg-dark" style={navStyle}>
             <div className="container">
               <a className="navbar-brand text-white" href="/Home"> Electioneer </a>
-              <div class="dot"></div>
+              <div className="dot"></div>
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
