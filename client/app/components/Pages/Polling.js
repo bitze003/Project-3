@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "whatwg-fetch";
-
 import Polling from "../Partials/PollingLocation/PollingLocation";
 import Map from "../Partials/Map/Map";
 import Header from '../Header/Header';
@@ -22,7 +21,7 @@ class Ballot extends Component {
       <div>
         <Header />
         <div className="jumbotron row" id="pollingJumbo">
-          <Map />
+  
           <Polling />
         </div>
       </div>
