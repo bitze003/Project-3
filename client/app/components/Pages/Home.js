@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import API from '../../utils/API';
-
+import { Redirect } from 'react-router-dom';
 import EarlyVoting from '../Partials/EarlyVoting/EarlyVoting'
 
 import {
     getFromStorage,
     setInStorage,
   } from '../../utils/storage';
-//import { MongooseDocument } from 'mongoose';
 
 class Home extends Component {
     constructor(props) {
@@ -22,29 +21,30 @@ class Home extends Component {
             token: ''
         };
     }
-
+   
     componentDidMount() {
-        
         const obj = getFromStorage('Electioneer');
-        const houseNumber = obj.houseNumber;
-        const streetName = obj.streetName;
-        const addressType = obj.addressType;
-        const city = obj.city;
-        const state = obj.state;
-        const tkn = obj.token
-        // get info from google civic info api
-        API.getInformation(houseNumber, streetName, addressType, city, state)
-        .then((res) => {
-            console.log(res)
-            const earlyVote = res.data.earlyVoteSites
-            this.setState({
-                electionName: res.data.election.name,
-                electionDate: res.data.election.electionDay,
-                earlyVoting: earlyVote,
-                token: tkn
-            });
-        })
-        .catch(err => console.log(err));
+        if (obj && obj.token) {
+            const houseNumber = obj.houseNumber;
+            const streetName = obj.streetName;
+            const addressType = obj.addressType;
+            const city = obj.city;
+            const state = obj.state;
+            const tkn = obj.token
+            // get info from google civic info api
+            API.getInformation(houseNumber, streetName, addressType, city, state)
+            .then((res) => {
+                console.log(res)
+                const earlyVote = res.data.earlyVoteSites
+                this.setState({
+                    electionName: res.data.election.name,
+                    electionDate: res.data.election.electionDay,
+                    earlyVoting: earlyVote,
+                    token: tkn
+                });
+            })
+            .catch(err => console.log(err));
+        }
     }
     
     render() {
@@ -67,10 +67,8 @@ class Home extends Component {
         const backgroundColor = {
             backgroundColor: 'white'
         }
-      
- 
-        return(
-        <div className="container" style={backgroundColor}>
+        
+        return (<div className="container" style={backgroundColor}>
         <hr />
             <h5 style={headerStyle}>Upcoming Election:</h5>
             <h4 style={electionTitle}>
@@ -90,8 +88,7 @@ class Home extends Component {
                 endDate = {item.endDate}
             />
             ))}
-        </div>
-        )
+        </div>)
     }
 }
 

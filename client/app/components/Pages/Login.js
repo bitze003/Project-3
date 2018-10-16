@@ -51,6 +51,7 @@ class Login extends Component {
   componentDidMount() {
     const obj = getFromStorage('Electioneer');
     if (obj && obj.token) {
+      this.props.onLogIn;
       const { token } = obj;
       // Verify token
       fetch('/api/account/verify?token=' + token)
@@ -58,7 +59,7 @@ class Login extends Component {
         .then(json => {
           if (json.success) {
             this.setState({
-              token,
+              token: json.token,
               isLoading: false
             });
           } else {
@@ -181,7 +182,7 @@ class Login extends Component {
             signUpStreetName: '',
             signUpAddressType: '',
             signUpCity: '',
-            signUpState: ''
+            signUpState: '',
           });
         } else {
           this.setState({
@@ -230,8 +231,9 @@ class Login extends Component {
             isLoading: false,
             signUpPassword: '',
             signUpEmail: '',
-            token: json.token
+            token: json.token,
           });
+          location.reload();
         } else {
           this.setState({
             signInError: json.message,
@@ -325,14 +327,12 @@ class Login extends Component {
                 />
                 <br />
                 <br />
-                <button onClick={this.onSignIn}>Sign In</button>
+                <button onClick = {this.onSignIn}>Sign In</button>
               <br />
               <br />
                 <button onClick={this.toggleSignUp} style={styleToggleSignUp}>Click Here to <p style={blueSignUp}>Sign Up!</p></button>
               </div>
-
           ):(
-
           <div className="signUpDiv">
             {
               (signUpError) ? (
@@ -404,12 +404,14 @@ class Login extends Component {
         </div>
       );
     }
-
-    return (
-      <div>
-        <Redirect to='/Home' />
-      </div>
-    );
+    if (token) {
+      return (
+        <div>
+          <Redirect to='/Home' />
+        </div>
+      );
+    }
+    
   }
 }
 
