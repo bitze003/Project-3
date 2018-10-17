@@ -19,7 +19,7 @@ class Ballot extends Component {
   render() {
     return (
       <div className="container">
-        <Header />
+
         {/* <div style={{ backgroundColor: "#5781F6", paddingTop: 30, paddingBottom: 30 }}>
           <div style={{backgroundColor: "white", width:700, marginLeft: "auto", marginRight: "auto", paddingBottom: 20, borderRadius: 10}}> */}
             <Api />
