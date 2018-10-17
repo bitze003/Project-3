@@ -7,18 +7,26 @@ import {
   setInStorage,
 } from '../../utils/storage';
 import OpenSecretsAPI from "../../utils/OpenSecrets/OpenSecretsAPI";
+import Modal from "../Modal/Modal";
+import {PieChart} from 'react-easy-chart';
+
+
+git
 
 class Api extends Component {
   constructor(props) {
     super(props);
     this.state = { 
       contests: [],
-      candId: ""
+      candId: "",
+      isOpen:false
     
     };
     this.retrieveCandadites = this.retrieveCandadites.bind(this);
     this.loadOpenSecrets = this.loadOpenSecrets.bind(this);
   }
+
+
 
   retrieveCandadites() {
     var houseNumber = "1112";
@@ -75,6 +83,7 @@ class Api extends Component {
     .catch(err => console.log(err));
   }
 
+  
     loadOpenSecrets(event){
       const candidateName = event.target.innerText
      const formateName = (name) => {
@@ -82,9 +91,8 @@ class Api extends Component {
         .reverse()
         .toString()
         .replace(",", ", ");
-        
-      return (nameArray)
-      console.log(event.target.innerText)
+    return (nameArray)
+      // console.log(event.target.innerText)
      }
      const formattedCandidateName = formateName(candidateName);
      const candidateIds = cid.filter ((candidate)=> {
@@ -95,15 +103,29 @@ class Api extends Component {
         return;
       const realCandidateId = candidateIds[0].CID
      
-     
+    
      console.log(formateName(candidateName))
      console.log(realCandidateId)
      this.setState({candId: realCandidateId});
+     this.toggleModal();
     }
 
+    toggleModal = () => {
+      this.setState({
+        isOpen: !this.state.isOpen
+      })
+    }
 
   render() {
     return (
+      <div className="modalCSS">                                     
+     <Modal show={this.state.isOpen}
+      onClose={this.toggleModal}>
+      Here's some content forfor the modal
+      <OpenSecretsAPI candId={this.state.candId} />
+      
+      </Modal>
+      
       <div
         //style={{ fontFamily: "'Work Sans', sans-serif" }}
         className="panel-group"
@@ -112,6 +134,7 @@ class Api extends Component {
         aria-multiselectable="true"
         //style={{ paddingTop: 30 }}
       >
+      
         <div className="panel panel-default">
           <div>
             {this.state.contests
@@ -180,8 +203,9 @@ class Api extends Component {
                               }
                               role="tabpanel"
                               aria-labelledby={"#heading" + i}
-                            ><OpenSecretsAPI candId={this.state.candId} />
-                              
+                            >
+                            
+
                               <div className="panel-body">
                                 {" "}
                                 <h3 onClick={this.loadOpenSecrets}
@@ -247,7 +271,9 @@ class Api extends Component {
               : null}
           </div>
         </div>
+
       </div>
+    </div>
     );
   }
 }

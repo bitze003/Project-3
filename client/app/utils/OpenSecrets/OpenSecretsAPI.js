@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 // import './App.css';
-
 import axios from 'axios';
+import {PieChart} from 'react-easy-chart';
 //change candinfo from {} to a []
 class OpenSecretsAPI extends Component {
   constructor(props){  
     super(props)
     this.state = {
     candInfo: [],
-    candId: ""
+    candId: "",
+    pieChartData: [{}]
   }
   this.makeApiCall = this.makeApiCall.bind(this)
 }
@@ -26,6 +27,7 @@ class OpenSecretsAPI extends Component {
         console.log(infores);
         console.log(industryres);
         console.log(sectorres);
+        const candidates = [];
         for(let i = 0; i < sectorres.data.response.sectors[0].sector.length; i++ ){
         const constObject = {
           
@@ -35,13 +37,20 @@ class OpenSecretsAPI extends Component {
           totalAmount: sectorres.data.response.sectors[0].sector[i]["$"].total 
           
         }
-        self.setState({
-          candInfo: [...this.state.candInfo, constObject]
-        })
+        candidates.push(constObject)
         // self.setState({candInfo: constObject})
       }
 
+      console.log(candidates)
+      const pieChartData = candidates.map( sector => {
+        return {key: sector.sectorName, value:parseInt(sector.totalAmount)}
+      })
+      console.log(pieChartData);
+      self.setState({candInfo: candidates, pieChartData: pieChartData})
+      
       }));
+
+      
   }
 
 
@@ -51,9 +60,17 @@ class OpenSecretsAPI extends Component {
       <div>
         <input type="submit" value="Submit"onClick={this.makeApiCall}></input>
       <div> Name: {this.state.candInfo.name} </div>
+      {this.state.pieChartData.map(item => {
+      <PieChart 
+      key = {item.key}
+       sector = {item.key}
+       totalAmount = {item.value}
+       />
+      })}
+
       <div>{this.state.candInfo ? this.state.candInfo.map(cand => {
         return(
-          <h3>Industry Name: {cand.sectorName}<br></br> Total Amount $: {cand.amount} </h3>
+          <p>Industry Name: {cand.sectorName}<br></br> Total Amount $: {cand.totalAmount} </p>
         )
     
       })
