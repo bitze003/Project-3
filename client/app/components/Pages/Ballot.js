@@ -21,7 +21,7 @@ class Ballot extends Component {
       <Header />
        <div className ="container" 
        style={{
-        marginTop:"5%",
+        marginTop:"7%",
         border: "solid black 2px",
         width: "75vw"
         }}>

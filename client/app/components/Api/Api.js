@@ -59,9 +59,8 @@ class Api extends Component {
         id="accordion"
         role="tablist"
         aria-multiselectable="true"
-      //style={{ paddingTop: 30 }}
       >
-        <div className="panel panel-default"> 
+        <div className="panel panel-default">
           <div>
             {this.state.contests
               ? this.state.contests.map((contests, i) => {
@@ -69,14 +68,11 @@ class Api extends Component {
                   <div className="container"
                     style={{
                       width: "70vw",
-                      marginTop: 20,
-                      paddingTop: 1,
                       marginLeft: "auto",
                       marginRight: "auto",
-                      paddingTop: 15,
-                      paddingRight: 0,
                       textAlign: "center",
                       borderBottom: "solid black 1px",
+                      overflow: "hidden"
                     }}
                     className="panel-heading "
                     role="tab"
@@ -97,10 +93,10 @@ class Api extends Component {
                         aria-controls={"collapse" + i}
                         className="office"
                         style={{
-                          fontSize: 20,
+                          fontSize: 22,
                           fontWeight: "bold",
                           paddingBottom: 20,
-                          lineHeight:3
+                          lineHeight: 3,
                         }}
                       >
                         {contests.office}
@@ -113,16 +109,15 @@ class Api extends Component {
                         return (
                           <div
                             id={"collapse" + i}
-                            // style={{
-                            //   width: 550,
-                            //   backgroundColor: "#F65757",
-                            //   marginTop: -10,
-                            //   paddingBottom: 20,
-                            //   borderRadius: 10,
-                            //   marginLeft: "auto",
-                            //   marginRight: "auto",
-                            //   fontFamily: "'Frank Ruhl Libre', serif"
-                            // }}
+                            style={{
+                              textAlign: "center",
+                              fontSize:16,
+                              paddingBottom: 30,
+                              borderRadius: 10,
+                              marginLeft: "auto",
+                              marginRight: "auto",
+                              fontFamily: "'Frank Ruhl Libre', serif"
+                            }}
                             className={
                               "panel-collapse multi-collapse collapse multi-collapse" +
                               i
@@ -133,25 +128,19 @@ class Api extends Component {
 
                             <div className="panel-body">
                               {" "}
-                              <p
-                              // style={{
-                              //   textDecoration: "underline",
-                              //   marginLeft: 20
-                              // }}
+                              <a
+                                style={{
+                                     textDecoration: "underline",
+                                     fontSize:20,
+                                     fontWeight:"bold",
+                                }}
                               >
                                 {candidate.name}
-                              </p>{" "}
-                              <p style={{ marginLeft: 20 }}>
+                              </a>{""}
+                              <p>
                                 {candidate.party}
                               </p>{" "}
-                              <p style={{ marginLeft: 20 }}>
-                                <a
-                                  href={candidate.candidateUrl}
-                                  target="blank"
-                                >
-                                  {candidate.candidateUrl}
-                                </a>
-                              </p>
+                             
                             </div>
                           </div>
                         );
@@ -185,7 +174,7 @@ class Api extends Component {
                           // }}
                           >
                             {" "}
-                            <h4>{contests.referendumText}</h4>
+                            <p style = {{fontSize:17}}>{contests.referendumText}</p>
                           </div>
                         </div>
                       )}
