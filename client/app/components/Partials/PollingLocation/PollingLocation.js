@@ -22,7 +22,6 @@ class Polling extends Component {
      addressType : obj.addressType,
      city : obj.city,
      yourState : obj.state
-
     }
     return addressDetails;
  }
@@ -117,32 +116,21 @@ initMap = () => {
   
 
   render() {
-   
+   const centerStyle = {
+    // borderRadius: 10,
+    // width: "100%",
+    textAlign: 'center'
+   }
 
     return (
-<div className="row">
+<div style={centerStyle}>
+      <h3> Your Local Polling Location<br></br></h3>
 
-<div id="map" className="map col-sm-5" style={{ height: "60vh", width: "30vw", marginTop: "0%" }}>
-            </div>
-
-
-
-      <div className="col-sm-7"style={{ textAlign:"center"}}>
-        <h3> Your Local Polling Location<br></br><br></br></h3>
-
-        {this.state.pollingLocations
-          ? this.state.pollingLocations.map(polling => {
-              //console.log(this.state);
+        {this.state.pollingLocations ? 
+          this.state.pollingLocations.map(polling => {
 
               return (
-                <div className="col-sm-12" style={{ textAlign:"center"}}
-                  style={{
-                   
-                    borderRadius: 0,
-                    width: "100%",
-                    textAlign: "center"
-                  }}
-                >
+                <div id="pole" style={centerStyle}>
                   <p id="locationName">{polling.address.locationName}</p>
                   <p id="line1">{polling.address.line1}</p>
                   <p id="cityStateZip">
@@ -161,7 +149,7 @@ initMap = () => {
                     style={{
                       backgroundColor: "#D3D3D3",
                       borderRadius: 10,
-                      width: 500,
+                      width: '100%',
                       textAlign: "center"
                     }}
                   >
@@ -177,8 +165,7 @@ initMap = () => {
               }
               return <div />;
             })}
-      </div>
-
+            <div id="map" className="map" style={{ height: "90vh", width: "100%", marginTop: "0%", filter: 'grayscale(90%)' }}></div>
       </div>
     );
   }
