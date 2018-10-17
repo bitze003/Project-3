@@ -18,6 +18,12 @@ html {
   margin: 0;
   background-color: #f6f6f6
  }
+a:hover { 
+ color: #0000EE;
+}
+a{
+ color:black;
+}
  .dot{
   height: 130px;
   width: 130px;

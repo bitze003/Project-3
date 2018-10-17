@@ -38,11 +38,11 @@ class Api extends Component {
     const self = this;
     axios
       .get(queryURL)
-      .then(function(response) {
+      .then(function (response) {
         console.log(response.data);
         self.setState({ contests: response.data.contests });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   }
@@ -59,103 +59,93 @@ class Api extends Component {
         id="accordion"
         role="tablist"
         aria-multiselectable="true"
-        //style={{ paddingTop: 30 }}
       >
         <div className="panel panel-default">
           <div>
             {this.state.contests
               ? this.state.contests.map((contests, i) => {
-                  return (
-                    <div
-                      // style={{
-                      //   width: 550,
-                      //   backgroundColor: "#F65757",
-                      //   marginTop: 20,
-                      //   paddingTop: 1,
-                      //   borderRadius: 10,
-                      //   marginLeft: "auto",
-                      //   marginRight: "auto",
-                      //   fontFamily: "'Frank Ruhl Libre', serif"
-                      // }}
-                      className="panel-heading "
-                      role="tab"
-                      id={"heading" + i}
+                return (
+                  <div className="container"
+                    style={{
+                      width: "70vw",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      textAlign: "center",
+                      borderBottom: "solid black 1px",
+                      overflow: "hidden"
+                    }}
+                    className="panel-heading "
+                    role="tab"
+                    id={"heading" + i}
+                  >
+                    <a
+                      //style={{ textAlign: "center", fontSize: 42 }}
+                      className="panel-title"
                     >
-                      <h1
-                        //style={{ textAlign: "center", fontSize: 42 }}
-                        className="panel-title"
+                      <a
+                        id={"headerLink" + i}
+                        role="button"
+                        data-toggle="collapse"
+                        data-target={".multi-collapse" + i}
+                        data-parent="#accordion"
+                        href={"#headLink" + i}
+                        aria-expanded="false"
+                        aria-controls={"collapse" + i}
+                        className="office"
+                        style={{
+                          fontSize: 22,
+                          fontWeight: "bold",
+                          paddingBottom: 20,
+                          lineHeight: 3,
+                        }}
                       >
-                        <a
-                          id={"headerLink" + i}
-                          role="button"
-                          data-toggle="collapse"
-                          data-target={".multi-collapse" + i}
-                          data-parent="#accordion"
-                          href={"#headLink" + i}
-                          aria-expanded="false"
-                          aria-controls={"collapse" + i}
-                          className="office"
-                          // style={{
-                          //   color: "black",
-                          //   paddingLeft: 15,
-                          //   paddingRight: 15,
-                          //   paddingTop: 20
-                          // }}
-                        >
-                          {contests.office}
-                        </a>
-                        <hr style={{ width: "90%" }} />
-                      </h1>
+                        {contests.office}
+                      </a>
 
-                      {contests.candidates ? (
-                        contests.candidates.map(candidate => {
-                          return (
-                            <div
-                              id={"collapse" + i}
-                              // style={{
-                              //   width: 550,
-                              //   backgroundColor: "#F65757",
-                              //   marginTop: -10,
-                              //   paddingBottom: 20,
-                              //   borderRadius: 10,
-                              //   marginLeft: "auto",
-                              //   marginRight: "auto",
-                              //   fontFamily: "'Frank Ruhl Libre', serif"
-                              // }}
-                              className={
-                                "panel-collapse multi-collapse collapse multi-collapse" +
-                                i
-                              }
-                              role="tabpanel"
-                              aria-labelledby={"#heading" + i}
-                            >
-                              
-                              <div className="panel-body">
-                                {" "}
-                                <h3
-                                  // style={{
-                                  //   textDecoration: "underline",
-                                  //   marginLeft: 20
-                                  // }}
-                                >
-                                  {candidate.name}
-                                </h3>{" "}
-                                <h4 style={{ marginLeft: 20 }}>
-                                  {candidate.party}
-                                </h4>{" "}
-                                <h4 style={{ marginLeft: 20 }}>
-                                  <a
-                                    href={candidate.candidateUrl}
-                                    target="blank"
-                                  >
-                                    {candidate.candidateUrl}
-                                  </a>
-                                </h4>
-                              </div>
+                    </a>
+
+                    {contests.candidates ? (
+                      contests.candidates.map(candidate => {
+                        return (
+                          <div
+                            id={"collapse" + i}
+                            style={{
+                              textAlign: "center",
+                              fontSize:16,
+                              paddingBottom: 30,
+                              borderRadius: 10,
+                              marginLeft: "auto",
+                              marginRight: "auto",
+                              fontFamily: "'Frank Ruhl Libre', serif"
+                            }}
+                            className={
+                              "panel-collapse multi-collapse collapse multi-collapse" +
+                              i
+                            }
+                            role="tabpanel"
+                            aria-labelledby={"#heading" + i}
+                          >
+
+                            <div className="panel-body">
+                              {" "}
+                              <a
+                                style={{
+                                     textDecoration: "underline",
+                                     fontSize:20,
+                                     fontWeight:"bold",
+                                }}
+                              >
+                                {candidate.name}
+                              </a>{""}
+                              <p>
+                                {candidate.party}
+                              </p>{" "}
+                             
                             </div>
-                          );
-                        })
-                      ) : (
+                          </div>
+                        );
+                      })
+                    ) : (
                         <div
                           id={"collapse" + i}
                           // style={{
@@ -175,22 +165,22 @@ class Api extends Component {
                           role="tabpanel"
                           aria-labelledby={"#heading" + i}
                         >
-                         
+
                           <div
                             className="panel-body"
-                            // style={{
-                            //   fontFamily: "'Work Sans', sans-serif",
-                            //   margin: 20
-                            // }}
+                          // style={{
+                          //   fontFamily: "'Work Sans', sans-serif",
+                          //   margin: 20
+                          // }}
                           >
                             {" "}
-                            <h4>{contests.referendumText}</h4>
+                            <p style = {{fontSize:17}}>{contests.referendumText}</p>
                           </div>
                         </div>
                       )}
-                    </div>
-                  );
-                })
+                  </div>
+                );
+              })
               : null}
           </div>
         </div>

@@ -75,8 +75,10 @@ initMap = () => {
         center: { lat: 44.9537, lng: -93.0900 },
         zoom: 13,
         mapTypeId: google.maps.MapTypeId.HYBRID
+        
     });
-   
+    var userAddress=(this.returnAddress().houseNumber)+" "+(this.returnAddress().address)+" "+(this.returnAddress().addressType)+","+(this.returnAddress().city)+","+(this.returnAddress().yourState)
+    
     var address = (this.state.pollingLocations[0].address.locationName + " " + this.state.pollingLocations[0].address.line1 + " " + this.state.pollingLocations[0].address.city + " " + this.state.pollingLocations[0].address.state + " " + this.state.pollingLocations[0].address.zip);
     console.log("state below here")
     console.log(this.state.pollingLocations[0].address)
@@ -95,7 +97,7 @@ initMap = () => {
         }
         var infoWindow = new google.maps.InfoWindow({
            
-            content:  '<p><strong>This is your Polling Place<br><a href="https://www.google.com/maps/dir/'+address+'"> Click for Directions!</a></strong></p>'
+            content:  '<p><strong><br>This is your Polling Place<br><a href="https://www.google.com/maps/dir/'+userAddress+'/'+address+'"> Click here for Directions!</a></strong></p>'
         });
         marker.addListener('click', function() {
             infoWindow.open(map, marker);
