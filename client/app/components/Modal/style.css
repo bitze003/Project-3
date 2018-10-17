@@ -1,13 +1,13 @@
 .backdrop {
     position: fixed;
-    top: 35%;
+    top: 15%;
     left: 40%;
     background: rgba(0,0,0,0.3);
     margin: '0 auto';
     padding: 30;
     margin: "auto";
-    width:  40vw;
-    height: 60vh;
+    width:  50vw;
+    height: 80vh;
     opacity: 1;
 }
 

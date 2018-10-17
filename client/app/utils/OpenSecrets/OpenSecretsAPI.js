@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import './App.css';
 import axios from 'axios';
 import {PieChart} from 'react-easy-chart';
+import './secrets.css'
 //change candinfo from {} to a []
 class OpenSecretsAPI extends Component {
   constructor(props){  
@@ -62,7 +63,7 @@ class OpenSecretsAPI extends Component {
       <div> Name: {this.state.candInfo.name} </div>
       {this.state.pieChartData.map(item => {
       <PieChart 
-      key = {item.key}
+       key = {item.key}
        sector = {item.key}
        totalAmount = {item.value}
        />

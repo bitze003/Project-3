@@ -8,10 +8,8 @@ import {
 } from '../../utils/storage';
 import OpenSecretsAPI from "../../utils/OpenSecrets/OpenSecretsAPI";
 import Modal from "../Modal/Modal";
-import {PieChart} from 'react-easy-chart';
 
 
-git
 
 class Api extends Component {
   constructor(props) {
@@ -121,7 +119,7 @@ class Api extends Component {
       <div className="modalCSS">                                     
      <Modal show={this.state.isOpen}
       onClose={this.toggleModal}>
-      Here's some content forfor the modal
+      Financial Data On Candidate
       <OpenSecretsAPI candId={this.state.candId} />
       
       </Modal>
