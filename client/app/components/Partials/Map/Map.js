@@ -22,7 +22,7 @@
     
 //     }
 
-//class Map extends Component {
+// class Map extends Component {
 
 //     initMap = () => {
         

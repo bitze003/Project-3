@@ -285,10 +285,7 @@ class Login extends Component {
     const centerStyle = {
       textAlign: 'center',
     }
-    const borderBox = {
-      border: '2px solid black',
-      padding: '10px'
-    }
+
     const styleToggleSignUp = {
       border: 'none',
       fontSize: '14px',
@@ -300,6 +297,17 @@ class Login extends Component {
     }
     const marginTop = {
       marginTop: '20px'
+    }
+
+    const loginBox = {
+
+      padding: '20px',
+    
+      margin: '20px'
+    }
+    const inputStyle = {
+      margin: '5px',
+      borderRadius: '3%'
     }
 
     if (isLoading) {
@@ -322,31 +330,33 @@ class Login extends Component {
         <p style={marginTop}>Welcome to Electioneer!</p>
           {
             (signedUp) ? (
-              <div style={borderBox}>
-                {
-                  (signInError) ? (
-                    <p>{signInError}</p>
-                  ) : (null)
-                }
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={signInEmail}
-                  onChange={this.onTextboxChangeSignInEmail}
-                />
+              <div className="container">
+                <div style={loginBox}>
+                  {
+                    (signInError) ? (
+                      <p>{signInError}</p>
+                    ) : (null)
+                  }
+                  <input style={inputStyle}
+                    type="email"
+                    placeholder="Email"
+                    value={signInEmail}
+                    onChange={this.onTextboxChangeSignInEmail}
+                  />
+                  <br />
+                  <input style={inputStyle}
+                    type="password"
+                    placeholder="Password"
+                    value={signInPassword}
+                    onChange={this.onTextboxChangeSignInPassword}
+                  />
+                  <br />
+                  <br />
+                  <button onClick = {this.onSignIn}>Sign In</button>
                 <br />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={signInPassword}
-                  onChange={this.onTextboxChangeSignInPassword}
-                />
                 <br />
-                <br />
-                <button onClick = {this.onSignIn}>Sign In</button>
-              <br />
-              <br />
-                <button onClick={this.toggleSignUp} style={styleToggleSignUp}>Click Here to<p style={blueSignUp}>Sign Up!</p></button>
+                  <button onClick={this.toggleSignUp} style={styleToggleSignUp}>Click Here to <p style={blueSignUp}>Sign Up!</p></button>
+                </div>
               </div>
           ):(
           <div className="signUpDiv">
@@ -356,43 +366,43 @@ class Login extends Component {
               ) : (null)
             }
             <p>Sign Up</p>
-            <input
+            <input style={inputStyle}
               type="firstName"
               placeholder="First Name"
               value={firstName}
               onChange={this.onTextboxChangeSignUpFirstName}
             /><br />
-            <input
+            <input style={inputStyle}
               type="lastName"
               placeholder="Last Name"
               value={lastName}
               onChange={this.onTextboxChangeSignUpLastName}
             /><br />
-            <input
+            <input style={inputStyle}
               type="email"
               placeholder="Email"
               value={signUpEmail}
               onChange={this.onTextboxChangeSignUpEmail}
             /><br />
-            <input
+            <input style={inputStyle}
               type="password"
               placeholder="Password"
               value={signUpPassword}
               onChange={this.onTextboxChangeSignUpPassword}
             /><br />
-            <input
+            <input style={inputStyle}
               type="houseNumber"
               placeholder="House Number"
               value={signUpHouseNumber}
               onChange={this.onTextboxChangeSignUpHouseNumber}
             /><br />
-            <input
+            <input style={inputStyle}
               type="streetName"
               placeholder="Street Name"
               value={signUpStreetName}
               onChange={this.onTextboxChangeSignUpStreetName}
             /><br />
-            <input
+            <input style={inputStyle}
               type="addressType"
               placeholder="Address Type (St., Blvd., Ave...)"
               value={signUpAddressType}
@@ -404,7 +414,7 @@ class Login extends Component {
               value={signUpCity}
               onChange={this.onTextboxChangeSignUpCity}
             /><br />
-            <input
+            <input style={inputStyle}
               type="state"
               placeholder="State"
               value={signUpState}
