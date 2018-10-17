@@ -20,7 +20,7 @@ class Ballot extends Component {
     return (
       <div>
         <Header />
-        <div className="jumbotron row" id="pollingJumbo">
+        <div className="jumbotron" id="pollingJumbo">
   
           <Polling />
         </div>
