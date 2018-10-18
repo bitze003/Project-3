@@ -1,3 +1,5 @@
+/*  blue #017bba */
+/* light grey #f6f6f6 */
 
 html {
   font-family: sans-serif; /* 1 */
@@ -11,17 +13,47 @@ html {
  */
  
  body {
+  font-family: 'Merriweather', serif;
+  font-weight: 300;
   margin: 0;
-  background-color:rgb(66, 107, 114);
- 
+  background-color: #f6f6f6
  }
- 
- #pollingJumbo{
+a:hover { 
+ color: #0000EE;
+}
+a{
+ color:black;
+}
+ .dot{
+  height: 130px;
+  width: 130px;
+  background-color: #017bba;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 1;
+ }
+ a.navbar-brand{
+   position: fixed;
+   color: #f6f6f6;
+   z-index: 2;
+   margin-left: 8px;
+   margin-top: 15px;
+ }
+ nav{
+  font-family: 'Merriweather', serif;
+  font-weight: 900;
+  border-bottom: 2px solid black;
+ }
+ a.nav-link{
+   font-family: 'Merriweather', serif;
+   font-weight: 300;
+   color: #f6f6f6;
+ }
+ /* #pollingJumbo{
   background-color: rgb(237, 237, 243);
   margin-top: 4%;
   padding:2%;
- 
- }
+ } */
 
 /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -43,15 +75,13 @@ html {
 
 body {
   margin: 0;
-  background-color:rgb(66, 107, 114);
-
 }
+
 
 #pollingJumbo{
   background-color: rgb(237, 237, 243);
   margin-top: 4%;
   padding:2%;
- 
 }
 
 /* HTML5 display definitions

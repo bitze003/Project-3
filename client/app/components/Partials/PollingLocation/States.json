@@ -1,19 +1,14 @@
-
-
 [
     {
         "name": "Alabama",
         "abbreviation": "AL",
         "website": "https://myinfo.alabamavotes.gov/VoterView/PollingPlaceSearch.do"
-        
     },
     {
         "name": "Alaska",
         "abbreviation": "AK",
-        "website": "https://myvoterinformation.alaska.gov/"
-        
+        "website": "https://myvoterinformation.alaska.gov/"  
     },
-
     {
         "name": "Arizona",
         "abbreviation": "AZ",
