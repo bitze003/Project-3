@@ -73,8 +73,8 @@ initMap = () => {
 
     var map = new window.google.maps.Map(document.getElementById('map'), {
         center: { lat: 44.9537, lng: -93.0900 },
-        zoom: 13,
-        mapTypeId: google.maps.MapTypeId.HYBRID
+        zoom: 14,
+       
         
     });
     var userAddress=(this.returnAddress().houseNumber)+" "+(this.returnAddress().address)+" "+(this.returnAddress().addressType)+","+(this.returnAddress().city)+","+(this.returnAddress().yourState)
@@ -165,7 +165,7 @@ initMap = () => {
               }
               return <div />;
             })}
-            <div id="map" className="map" style={{ height: "90vh", width: "100%", marginTop: "0%", filter: 'grayscale(90%)' }}></div>
+            <div id="map" className="map" style={{ height: "90vh", width: "100%", marginTop: "0%", filter: 'grayscale(40%)' }}></div>
       </div>
     );
   }
