@@ -24,6 +24,9 @@ module.exports = (app) => {
         res.json(result)
       });
     })
+    .catch(error => {
+      console.log(error)
+    })
   });
 
   app.get('/candindustry', (req, res) => {
@@ -46,6 +49,9 @@ module.exports = (app) => {
         res.json(result)
       });
     })
+    .catch(error => {
+      console.log(error)
+    })
   });
 
   app.get('/candSector', (req, res) => {
@@ -67,6 +73,9 @@ module.exports = (app) => {
 
         res.json(result)
       });
+    })
+    .catch(error => {
+      console.log(error)
     })
   });
 }

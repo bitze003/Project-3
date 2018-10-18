@@ -1,73 +1,67 @@
 import React, { Component } from 'react';
-// import './App.css';
 import axios from 'axios';
-import {PieChart} from 'react-easy-chart';
 import './secrets.css'
-//change candinfo from {} to a []
+import PieChart from 'react-simple-pie-chart';
+
 class OpenSecretsAPI extends Component {
   constructor(props){  
     super(props)
     this.state = {
     candInfo: [],
     candId: "",
-    pieChartData: [{}]
+    pieChartData: []
   }
   this.makeApiCall = this.makeApiCall.bind(this)
 }
+
   makeApiCall = (e) =>{
     e.preventDefault();
-    console.log('button pressed');
-    const self = this;
-    axios.all([
-      axios.get(`/candinfo?candId=${this.props.candId}`),
-      axios.get(`/candindustry?candId=${this.props.candId}`),
+     const self = this;
       axios.get(`/candSector?candId=${this.props.candId}`)
-    ])
-      .then (axios.spread((infores, industryres, sectorres)  => {
-        // r = JSON.parse(r.trim());
-        console.log(infores);
-        console.log(industryres);
-        console.log(sectorres);
+      .then(response  => {
+      
         const candidates = [];
-        for(let i = 0; i < sectorres.data.response.sectors[0].sector.length; i++ ){
-        const constObject = {
-          
-          name: infores.data.response.summary[0]["$"].cand_name,
-          sectorName: sectorres.data.response.sectors[0].sector[i]["$"].sector_name,
-          amount: sectorres.data.response.sectors[0].sector[i]["$"].total, 
-          totalAmount: sectorres.data.response.sectors[0].sector[i]["$"].total 
-          
+        
+        for(let i = 0; i < response.data.response.sectors[0].sector.length; i++ ){
+          const constObject = {
+            sectorName: response.data.response.sectors[0].sector[i]["$"].sector_name,
+            totalAmount: response.data.response.sectors[0].sector[i]["$"].total, 
+            color: getRandomColor()
         }
-        candidates.push(constObject)
-        // self.setState({candInfo: constObject})
+      candidates.push(constObject)
       }
 
-      console.log(candidates)
       const pieChartData = candidates.map( sector => {
-        return {key: sector.sectorName, value:parseInt(sector.totalAmount)}
+        return {value:parseInt(sector.totalAmount), key: sector.sectorName, color: sector.color}
       })
-      console.log(pieChartData);
-      self.setState({candInfo: candidates, pieChartData: pieChartData})
-      
-      }));
 
-      
+        function getRandomColor() {
+          let letters = '0123456789ABCDEF';
+          let color = '#';
+          for (let i=0; i<6; i++){
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+          return color;
+        }
+
+      this.setState({candInfo: candidates, pieChartData: pieChartData})
+      }).catch(function (error){
+        console.log(error);
+      }).bind(this)
   }
-
-
+  
   render() {
-    // console.log(this.state.candInfo)
+
     return (
       <div>
-        <input type="submit" value="Submit"onClick={this.makeApiCall}></input>
+        <button value="Submit"onClick={this.makeApiCall}></button>
       <div> Name: {this.state.candInfo.name} </div>
-      {this.state.pieChartData.map(item => {
-      <PieChart 
-       key = {item.key}
-       sector = {item.key}
-       totalAmount = {item.value}
-       />
-      })}
+     {JSON.stringify(this.state.pieChartData)}
+
+<PieChart
+  slices={this.state.pieChartData}
+/>
+    
 
       <div>{this.state.candInfo ? this.state.candInfo.map(cand => {
         return(
