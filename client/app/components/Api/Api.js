@@ -129,10 +129,13 @@ class Api extends Component {
                             <div className="panel-body">
                               {" "}
                               <a
+                                href={'https://www.google.com/search?q='  + candidate.name}
+                                target="_blank"
                                 style={{
                                      textDecoration: "underline",
                                      fontSize:20,
                                      fontWeight:"bold",
+                                     
                                 }}
                               >
                                 {candidate.name}
