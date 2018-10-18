@@ -22,3 +22,4 @@ export function setInStorage(key, obj) {
         console.error(err);
     }
 }
+

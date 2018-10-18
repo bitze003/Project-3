@@ -1,17 +1,30 @@
 import React, { Component } from "react";
 import axios from "axios";
 import API from '../../utils/API';
+import cid from "../../utils/OpenSecrets/cid"
 import {
   getFromStorage,
   setInStorage,
 } from '../../utils/storage';
+import OpenSecretsAPI from "../../utils/OpenSecrets/OpenSecretsAPI";
+import Modal from "../Modal/Modal";
+
+
 
 class Api extends Component {
   constructor(props) {
     super(props);
-    this.state = { contests: [] };
+    this.state = { 
+      contests: [],
+      candId: "",
+      isOpen:false
+    
+    };
     this.retrieveCandadites = this.retrieveCandadites.bind(this);
+    this.loadOpenSecrets = this.loadOpenSecrets.bind(this);
   }
+
+
 
   retrieveCandadites() {
     const obj = getFromStorage('Electioneer');
@@ -51,8 +64,49 @@ class Api extends Component {
     this.retrieveCandadites();
   }
 
+  
+    loadOpenSecrets(event){
+      const candidateName = event.target.innerText
+     const formateName = (name) => {
+       let nameArray = name.split (" ")
+        .reverse()
+        .toString()
+        .replace(",", ", ");
+    return (nameArray)
+      // console.log(event.target.innerText)
+     }
+     const formattedCandidateName = formateName(candidateName);
+     const candidateIds = cid.filter ((candidate)=> {
+        return (candidate.CRPName == formattedCandidateName);
+     });
+        if (! candidateIds.length > 0) 
+
+        return;
+      const realCandidateId = candidateIds[0].CID
+     
+    
+     console.log(formateName(candidateName))
+     console.log(realCandidateId)
+     this.setState({candId: realCandidateId});
+     this.toggleModal();
+    }
+
+    toggleModal = () => {
+      this.setState({
+        isOpen: !this.state.isOpen
+      })
+    }
+
   render() {
     return (
+      <div className="modalCSS">                                     
+     <Modal show={this.state.isOpen}
+      onClose={this.toggleModal}>
+      Financial Data On Candidate
+      <OpenSecretsAPI candId={this.state.candId} />
+      
+      </Modal>
+      
       <div
         //style={{ fontFamily: "'Work Sans', sans-serif" }}
         className="panel-group"
@@ -60,6 +114,7 @@ class Api extends Component {
         role="tablist"
         aria-multiselectable="true"
       >
+      
         <div className="panel panel-default">
           <div>
             {this.state.contests
@@ -128,6 +183,7 @@ class Api extends Component {
 
                             <div className="panel-body">
                               {" "}
+                              <h3 onClick={this.loadOpenSecrets}> 
                               <a
                                 href={'https://www.google.com/search?q='  + candidate.name}
                                 target="_blank"
@@ -140,6 +196,7 @@ class Api extends Component {
                               >
                                 {candidate.name}
                               </a>{""}
+                              </h3>
                               <p>
                                 {candidate.party}
                               </p>{" "}
@@ -187,9 +244,12 @@ class Api extends Component {
               : null}
           </div>
         </div>
+
       </div>
+    </div>
     );
   }
 }
 
 export default Api;
+
