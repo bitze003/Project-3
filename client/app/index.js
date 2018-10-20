@@ -13,8 +13,6 @@ import {
 } from 'react-router-dom'
 
 import App from './components/App/App';
-
-
 import './styles/styles.scss';
 
 render((
