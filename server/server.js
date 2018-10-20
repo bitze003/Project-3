@@ -17,6 +17,9 @@ const port  = process.env.PORT || 8080;
 // ================================================================================================
 
 // Set up Mongoose
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/login'";
+
 mongoose.connect((isDev ? config.db_dev : config.db), { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
@@ -57,6 +60,10 @@ if (isDev) {
     res.end();
   });
 }
+
+
+
+
 
 app.listen(port, '0.0.0.0', (err) => {
   if (err) {
