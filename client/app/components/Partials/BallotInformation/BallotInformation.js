@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
-import API from '../../utils/API';
-import cid from "../../utils/OpenSecrets/cid"
+import cid from "../../../utils/OpenSecrets/cid"
 import {
   getFromStorage,
   setInStorage,
-} from '../../utils/storage';
-import OpenSecretsAPI from "../../utils/OpenSecrets/OpenSecretsAPI";
-import Modal from "../Modal/Modal";
+} from '../../../utils/storage';
+import OpenSecrets from "../../Partials/OpenSecrets/OpenSecrets";
+import Modal from "../../Modal/Modal";
 
-
-
-class Api extends Component {
+class BallotInformation extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -22,9 +19,7 @@ class Api extends Component {
     };
     this.retrieveCandadites = this.retrieveCandadites.bind(this);
     this.loadOpenSecrets = this.loadOpenSecrets.bind(this);
-  }
-
-
+  };
 
   retrieveCandadites() {
     const obj = getFromStorage('Electioneer');
@@ -63,33 +58,35 @@ class Api extends Component {
   componentDidMount() {
     this.retrieveCandadites();
   }
-
   
-    loadOpenSecrets(event){
-      const candidateName = event.target.innerText
-     const formateName = (name) => {
-       let nameArray = name.split (" ")
+  loadOpenSecrets = (param) => (event) => {
+    event.preventDefault()
+      console.log(param)
+
+    const formatName = (name) => {
+      let nameArray = name.split (" ")
         .reverse()
         .toString()
         .replace(",", ", ");
-    return (nameArray)
-      // console.log(event.target.innerText)
+      return (nameArray)
      }
-     const formattedCandidateName = formateName(candidateName);
-     const candidateIds = cid.filter ((candidate)=> {
-        return (candidate.CRPName == formattedCandidateName);
-     });
-        if (! candidateIds.length > 0) 
 
-        return;
-      const realCandidateId = candidateIds[0].CID
-     
+      const candidateName = formatName(param);
+        console.log(candidateName)
+
+      const candidateIds = cid.filter((candidate)=> {
+       return (candidate.CRPName == candidateName);
+      });
     
-     console.log(formateName(candidateName))
-     console.log(realCandidateId)
-     this.setState({candId: realCandidateId});
-     this.toggleModal();
-    }
+      
+      const realCandidateId = candidateIds[0].CID;
+      console.log(realCandidateId)
+      this.setState({candId: realCandidateId}, function () {
+        console.log(this.state.candId);
+      })
+        this.toggleModal();
+      };
+      
 
     toggleModal = () => {
       this.setState({
@@ -100,15 +97,11 @@ class Api extends Component {
   render() {
     return (
       <div className="modalCSS">                                     
-     <Modal show={this.state.isOpen}
-      onClose={this.toggleModal}>
-      Financial Data On Candidate
-      <OpenSecretsAPI candId={this.state.candId} />
-      
+      <Modal show={this.state.isOpen} onClose={this.toggleModal}>
+        <OpenSecrets candId={this.state.candId} />
       </Modal>
       
       <div
-        //style={{ fontFamily: "'Work Sans', sans-serif" }}
         className="panel-group"
         id="accordion"
         role="tablist"
@@ -133,11 +126,10 @@ class Api extends Component {
                     role="tab"
                     id={"heading" + i}
                   >
-                    <a
-                      //style={{ textAlign: "center", fontSize: 42 }}
+                    <div
                       className="panel-title"
                     >
-                      <a
+                      <a className="panel-title"
                         id={"headerLink" + i}
                         role="button"
                         data-toggle="collapse"
@@ -156,8 +148,7 @@ class Api extends Component {
                       >
                         {contests.office}
                       </a>
-
-                    </a>
+                    </div>
 
                     {contests.candidates ? (
                       contests.candidates.map(candidate => {
@@ -167,23 +158,18 @@ class Api extends Component {
                             style={{
                               textAlign: "center",
                               fontSize:16,
-                              paddingBottom: 30,
+                              paddingBottom: 10,
                               borderRadius: 10,
                               marginLeft: "auto",
                               marginRight: "auto",
                               fontFamily: "'Frank Ruhl Libre', serif"
                             }}
-                            className={
-                              "panel-collapse multi-collapse collapse multi-collapse" +
-                              i
-                            }
+                            className={"panel-collapse multi-collapse collapse multi-collapse" + i}
                             role="tabpanel"
                             aria-labelledby={"#heading" + i}
                           >
-
                             <div className="panel-body">
                               {" "}
-                              <h3 onClick={this.loadOpenSecrets}> 
                               <a
                                 href={'https://www.google.com/search?q='  + candidate.name}
                                 target="_blank"
@@ -191,48 +177,27 @@ class Api extends Component {
                                      textDecoration: "underline",
                                      fontSize:20,
                                      fontWeight:"bold",
-                                     
                                 }}
                               >
-                                {candidate.name}
+                                <h5>{candidate.name}</h5>
                               </a>{""}
-                              </h3>
-                              <p>
-                                {candidate.party}
-                              </p>{" "}
-                             
+                              <h6>{candidate.party}</h6>
+                              {/* <h5 onClick={this.loadOpenSecrets(candidate.name, event)}>Financials</h5> */}
+                              {" "}
+                  
                             </div>
+
                           </div>
                         );
                       })
                     ) : (
                         <div
                           id={"collapse" + i}
-                          // style={{
-                          //   width: 500,
-                          //   backgroundColor: "#F65757",
-                          //   marginTop: 20,
-                          //   paddingBottom: 20,
-                          //   borderRadius: 10,
-                          //   marginLeft: "auto",
-                          //   marginRight: "auto",
-                          //   fontFamily: "'Frank Ruhl Libre', serif"
-                          // }}
-                          className={
-                            "panel-collapse multi-collapse collapse multi-collapse" +
-                            i
-                          }
+                          className={"panel-collapse multi-collapse collapse multi-collapse" + i}
                           role="tabpanel"
                           aria-labelledby={"#heading" + i}
                         >
-
-                          <div
-                            className="panel-body"
-                          // style={{
-                          //   fontFamily: "'Work Sans', sans-serif",
-                          //   margin: 20
-                          // }}
-                          >
+                          <div className="panel-body">
                             {" "}
                             <p style = {{fontSize:17}}>{contests.referendumText}</p>
                           </div>
@@ -251,5 +216,5 @@ class Api extends Component {
   }
 }
 
-export default Api;
+export default BallotInformation;
 

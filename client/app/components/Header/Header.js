@@ -17,7 +17,6 @@ class Header extends Component {
       name: '',
       isLoading: false,
     };
-
     this.logout = this.logout.bind(this);
   };
 
@@ -91,7 +90,7 @@ logout() {
           {(!this.state.token) ? (
         <nav className="navbar navbar-expand-sm navbar-light bg-light" style={navStyle}>
           <div className="container">
-            <a className="navbar-brand" href="/Login">Electioneer</a>
+            <a className="navbar-brand" href="/">Electioneer</a>
             <div className="dot"></div>
           </div>
         </nav>

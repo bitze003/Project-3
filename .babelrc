@@ -5,8 +5,6 @@
   ],
   "plugins": [
     ["transform-class-properties"],
-    ["transform-inline-environment-variables"],
-    ["css-in-js"]
-
+    ["transform-inline-environment-variables"]
   ]
 }
