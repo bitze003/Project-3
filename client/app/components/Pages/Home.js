@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import API from '../../utils/API';
-import { Redirect } from 'react-router-dom';
 import EarlyVoting from '../Partials/EarlyVoting/EarlyVoting'
 import Header from '../Header/Header'
 import {

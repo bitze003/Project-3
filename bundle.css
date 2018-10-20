@@ -1,9 +1,8 @@
 .client_app_components_Modal_Modal_js-backdropStyle-backdropStyle {
   position: fixed;
-  width: 100px;
   top: 0px;
   left: 0px;
-  background-color: rgba(0,0,0,0.3);
+  background-color: red;
   padding: 50px;
   z-index: 50;
 }
@@ -11,8 +10,6 @@
   position: fixed;
   background-color: #fff;
   border-radius: 5px;
-  max-width: 500px;
-  min-height: 300px;
   margin: auto;
   padding: 30px;
   width: 50%;

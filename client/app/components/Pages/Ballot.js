@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "whatwg-fetch";
-import Api from "../Api/Api";
+import BallotInformation from '../Partials/BallotInformation/BallotInformation';
 import Header from '../Header/Header';
-import { getFromStorage, setInStorage } from "../../utils/storage";
 
 class Ballot extends Component {
   constructor(props) {
@@ -16,23 +15,20 @@ class Ballot extends Component {
   componentDidMount() {}
 
   render() {
+    const containerStyle = {
+      marginTop: "7%",
+      border: "solid black 2px",
+      width: "75vw"
+    }
     return (
 
       <div>
-      <Header />
-       <div className ="container" 
-       style={{
-        marginTop:"7%",
-        border: "solid black 2px",
-        width: "75vw"
-        }}>
-        {/* <div style={{ backgroundColor: "#5781F6", paddingTop: 30, paddingBottom: 30 }}>
-          <div style={{backgroundColor: "white", width:700, marginLeft: "auto", marginRight: "auto", paddingBottom: 20, borderRadius: 10}}> */}
-            <Api />
-            </div>
-          </div>
-    //     </div>
-    //   </div>
+        <Header />
+        <div className ="container" style={{containerStyle}}>
+          <BallotInformation />
+        </div>
+      </div>
+    
     );
   }
 }

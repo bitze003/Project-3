@@ -300,14 +300,13 @@ class Login extends Component {
     }
 
     const loginBox = {
-
       padding: '20px',
-    
       margin: '20px'
     }
     const inputStyle = {
       margin: '5px',
-      borderRadius: '3%'
+      borderRadius: '3%',
+      width: '300px'
     }
 
     if (isLoading) {
@@ -408,7 +407,7 @@ class Login extends Component {
               value={signUpAddressType}
               onChange={this.onTextboxChangeSignUpAddressType}
             /><br />
-            <input
+            <input style={inputStyle}
               type="city"
               placeholder="City"
               value={signUpCity}
