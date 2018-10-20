@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({useNewUrlParser: true}));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/public"));
+  app.use(express.static("client/build"));
 }
 
 // API routes
@@ -64,10 +64,6 @@ if (isDev) {
     res.end();
   });
 }
-
-
-
-
 
 app.listen(port, (err) => {
   if (err) {
