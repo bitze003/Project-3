@@ -1,8 +1,8 @@
 # Electioneer
 
-Electioneer is the one stop shop for all the information you need to make an informed (and timely) decision at the poles. Sign up with username, password, and address to see all the information about your upcoming election, including: ** the election date, your early voting options, your ballot, and your polling location. **
+Electioneer is the one stop shop for all the information you need to make an informed (and timely) decision at the poles. Sign up with username, password, and address to see all the information about your upcoming election, including: the election date, your early voting options, your ballot, and your polling location. 
 
-![login](https://github.com/bitze003/Project-3/client/public/assets/img/login.png)
+![home](https://github.com/bitze003/Project-3/blob/master/client/public/assets/img/home.png)
 
 ## Electioneer Technologies
 - [React](https://facebook.github.io/react/) and [React Router](https://reacttraining.com/react-router/) for the frontend
@@ -14,12 +14,6 @@ Electioneer is the one stop shop for all the information you need to make an inf
 - [Node.js](https://nodejs.org/en/) 6+
 
 ## Running
-
-Make sure to add a `config.js` file in the `config` folder. Inside of that file, add this snippet: 
-
-module.exports = {
- db_dev: 'mongodb://localhost:27017/login'
-  };
   
 Run 'npm install' in the console, and 'npm run start:dev' to start the server. 
 Visit http://0.0.0.0:8080 to see the magic!
