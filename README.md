@@ -2,7 +2,14 @@
 
 Electioneer is the one stop shop for all the information you need to make an informed (and timely) decision at the poles. Sign up with username, password, and address to see all the information about your upcoming election, including: the election date, your early voting options, your ballot, and your polling location. 
 
-![home](https://github.com/bitze003/Project-3/blob/master/client/public/assets/img/home.png)
+*** Home Page ***
+![Home](https://github.com/bitze003/Project-3/blob/master/client/public/assets/img/home.png)
+
+*** Ballot Page ***
+![Ballot](https://github.com/bitze003/Project-3/blob/master/client/public/assets/img/ballotOpen.png)
+
+*** Polling Place *** 
+![Polling](https://github.com/bitze003/Project-3/blob/master/client/public/assets/img/map.png)
 
 ## Electioneer Technologies
 - [React](https://facebook.github.io/react/) and [React Router](https://reacttraining.com/react-router/) for the frontend
