@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 import API from '../../utils/API';
 import EarlyVoting from '../Partials/EarlyVoting/EarlyVoting'
-import Header from '../Header/Header'
+import Header from '../Header/Header';
+import moment from 'moment';
 import {
     getFromStorage,
     setInStorage,

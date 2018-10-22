@@ -22,7 +22,7 @@ const OpenSecretsAPI = {
         console.log('Done');
 
 
-        return res.json(result)
+        return response.json(result)
       });
     })
     .catch(error => {

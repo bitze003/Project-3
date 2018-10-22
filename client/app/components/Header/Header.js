@@ -1,7 +1,6 @@
 import React, { Component }  from 'react';
 import 'whatwg-fetch';
 
-
 import {
   getFromStorage,
   setInStorage,
@@ -21,8 +20,6 @@ class Header extends Component {
   };
 
   componentDidMount() {
-    console.log(location)
-    this.setState({ location: location })
 
     const obj = getFromStorage('Electioneer');
     if (obj && obj.token) {

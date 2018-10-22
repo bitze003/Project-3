@@ -5,7 +5,6 @@ import {
   getFromStorage,
   setInStorage,
 } from '../../utils/storage';
-import Home from '../Pages/Home';
 import Header from '../Header/Header';
 
 class Login extends Component {
@@ -54,7 +53,7 @@ class Login extends Component {
   componentDidMount() {
     const obj = getFromStorage('Electioneer');
     if (obj && obj.token) {
-      this.props.onLogIn;
+
       const { token } = obj;
       // Verify token
       fetch('/api/account/verify?token=' + token)

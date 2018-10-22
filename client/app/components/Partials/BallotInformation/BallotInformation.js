@@ -147,6 +147,7 @@ class BallotInformation extends Component {
                         }}
                       >
                         {contests.office}
+                        {contests.ballotTitle}
                       </a>
                     </div>
 
@@ -199,7 +200,7 @@ class BallotInformation extends Component {
                         >
                           <div className="panel-body">
                             {" "}
-                            <p style = {{fontSize:17}}>{contests.referendumText}</p>
+                            <p style={{fontSize:17}}>{contests.referendumText}</p>
                           </div>
                         </div>
                       )}

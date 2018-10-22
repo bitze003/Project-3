@@ -85,9 +85,9 @@ initMap = () => {
     console.log("this is the address") 
     console.log(address);
     geocoder.geocode({ address: address }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
+        if (status == google.maps.GeocoderStatus.OK) { // eslint-disable-line no-undef
             map.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
+            var marker = new google.maps.Marker({   // eslint-disable-line no-undef
                 map: map,
                 position: results[0].geometry.location,
                 icon: ''
@@ -95,7 +95,7 @@ initMap = () => {
         } else {
             //alert('Geocode was not successful for the following reason: ' + status);
         }
-        var infoWindow = new google.maps.InfoWindow({
+        var infoWindow = new google.maps.InfoWindow({   // eslint-disable-line no-undef
            
             content:  '<p><strong><br>This is your Polling Place<br><a href="https://www.google.com/maps/dir/'+userAddress+'/'+address+'"> Click here for Directions!</a></strong></p>'
         });
