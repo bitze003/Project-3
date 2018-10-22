@@ -15,12 +15,6 @@ Electioneer is the one stop shop for all the information you need to make an inf
 
 ## Running
 
-Make sure to add a `config.js` file in the `config` folder. Inside of that file, add this snippet: 
-
-module.exports = {
- db_dev: 'mongodb://localhost:27017/login'
-  };
-  
 Run 'npm install' in the console, and 'npm run start:dev' to start the server. 
 Visit http://0.0.0.0:8080 to see the magic!
 ```
